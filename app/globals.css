@@ -246,3 +246,36 @@ h2, h3, h4, h5, h6 {
 .perspective-1500 {
   perspective: 1500px;
 }
+
+/* Twinkle animations for stars */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes twinkle-bright {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+    box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.6);
+  }
+}
+
+.animate-twinkle {
+  animation: twinkle ease-in-out infinite;
+}
+
+.animate-twinkle-bright {
+  animation: twinkle-bright ease-in-out infinite;
+}

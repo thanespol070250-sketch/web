@@ -4,10 +4,9 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useLanguage } from './components/LanguageContext';
 import { useTheme } from './components/ThemeContext';
-import LanguageSwitcher from './components/LanguageSwitcher';
 import ThemeSwitcher from './components/ThemeSwitcher';
 
-type Topic = 'love' | 'studies' | 'personality';
+type Topic = 'love' | 'studies' | 'personality' | 'health' | 'finance';
 
 // Import type separately
 import type { OracleCard } from './components/OracleCardDeck';
@@ -22,32 +21,48 @@ const OracleCardDeck = dynamic(() => import('./components/OracleCardDeck'), {
   ),
 });
 
-const topicTranslations = {
-  love: { en: 'love', th: 'ความรัก' },
-  studies: { en: 'studies', th: 'การศึกษา' },
-  personality: { en: 'personality', th: 'บุคลิก' },
+// Dynamic import to prevent SSR for stars (uses Math.random)
+const Stars = dynamic(() => import('./components/Stars'), {
+  ssr: false,
+});
+
+const topicLabels: Record<Topic, string> = {
+  love: 'Love & Relationships',
+  studies: 'Career & Studies',
+  personality: 'Personal Growth & Future',
+  health: 'Health & Wellness',
+  finance: 'Finance & Prosperity',
+};
+
+const topicIcons: Record<Topic, string> = {
+  love: '💕',
+  studies: '📚',
+  personality: '🌟',
+  health: '🌿',
+  finance: '💰',
 };
 
 export default function FortuneTellerPage() {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const { theme } = useTheme();
   const isNight = theme === 'night';
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: '',
     dateOfBirth: '',
-    question: '',
   });
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [question, setQuestion] = useState('');
   const [selectedCard, setSelectedCard] = useState<OracleCard | null>(null);
   const [fortune, setFortune] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [deckKey, setDeckKey] = useState(0);
 
+  // Step 1: Basic Info Submit
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.name && formData.dateOfBirth && formData.question) {
+    if (formData.name && formData.dateOfBirth) {
       setStep(2);
       setError(null);
     } else {
@@ -55,11 +70,23 @@ export default function FortuneTellerPage() {
     }
   };
 
-  const handleTopicSelect = (topic: Topic) => {
+  // Step 2: Topic selection (visual only, stores the topic)
+  const handleTopicClick = (topic: Topic) => {
     setSelectedTopic(topic);
-    setStep(3);
   };
 
+  // Step 2: Question submission to proceed to card selection
+  const handleQuestionSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (selectedTopic && question.trim()) {
+      setStep(3);
+      setError(null);
+    } else {
+      setError(selectedTopic ? 'Please enter your question' : 'Please select a topic');
+    }
+  };
+
+  // Step 3: Card selection and API call
   const handleCardSelect = async (card: OracleCard) => {
     setSelectedCard(card);
     setIsLoading(true);
@@ -71,7 +98,7 @@ export default function FortuneTellerPage() {
         body: JSON.stringify({
           name: formData.name,
           dateOfBirth: formData.dateOfBirth,
-          question: formData.question,
+          question: question,
           topic: selectedTopic,
           card: card,
         }),
@@ -93,8 +120,9 @@ export default function FortuneTellerPage() {
 
   const handleReset = () => {
     setStep(1);
-    setFormData({ name: '', dateOfBirth: '', question: '' });
+    setFormData({ name: '', dateOfBirth: '' });
     setSelectedTopic(null);
+    setQuestion('');
     setSelectedCard(null);
     setFortune(null);
     setError(null);
@@ -122,56 +150,7 @@ export default function FortuneTellerPage() {
         {isNight ? (
           <>
             {/* Stars background */}
-            <div className="absolute inset-0">
-              {/* Twinkling stars layer 1 */}
-              {[...Array(50)].map((_, i) => (
-                <div
-                  key={`star1-${i}`}
-                  className="absolute rounded-full animate-twinkle"
-                  style={{
-                    width: Math.random() * 2 + 1 + 'px',
-                    height: Math.random() * 2 + 1 + 'px',
-                    top: Math.random() * 100 + '%',
-                    left: Math.random() * 100 + '%',
-                    background: 'white',
-                    animationDelay: Math.random() * 3 + 's',
-                    animationDuration: Math.random() * 2 + 2 + 's',
-                  }}
-                />
-              ))}
-              {/* Twinkling stars layer 2 - colored */}
-              {[...Array(30)].map((_, i) => (
-                <div
-                  key={`star2-${i}`}
-                  className="absolute rounded-full animate-twinkle"
-                  style={{
-                    width: Math.random() * 2 + 1 + 'px',
-                    height: Math.random() * 2 + 1 + 'px',
-                    top: Math.random() * 100 + '%',
-                    left: Math.random() * 100 + '%',
-                    background: i % 3 === 0 ? '#ffeaa7' : i % 3 === 1 ? '#a29bfe' : '#fd79a8',
-                    animationDelay: Math.random() * 4 + 's',
-                    animationDuration: Math.random() * 3 + 3 + 's',
-                  }}
-                />
-              ))}
-              {/* Larger bright stars */}
-              {[...Array(15)].map((_, i) => (
-                <div
-                  key={`star3-${i}`}
-                  className="absolute animate-twinkle-bright"
-                  style={{
-                    width: '3px',
-                    height: '3px',
-                    top: Math.random() * 100 + '%',
-                    left: Math.random() * 100 + '%',
-                    background: 'radial-gradient(circle, white 0%, transparent 70%)',
-                    boxShadow: '0 0 6px 2px rgba(255, 255, 255, 0.5)',
-                    animationDelay: Math.random() * 5 + 's',
-                  }}
-                />
-              ))}
-            </div>
+            <Stars />
             {/* Moon glow */}
             <div className="absolute top-10 right-10 w-64 h-64 rounded-full bg-gradient-radial from-[#ffeaa7]/20 via-[#ffeaa7]/10 to-transparent blur-3xl animate-pulse"></div>
             {/* Moon */}
@@ -316,10 +295,10 @@ export default function FortuneTellerPage() {
         {/* Header */}
         <header className="text-center mb-12 relative z-10">
           <div className="flex justify-between items-center mb-4">
-            <div className="flex gap-2">
-              <ThemeSwitcher />
+            <ThemeSwitcher />
+            <div className="text-sm" style={{ color: isNight ? '#ffeaa7' : '#c05621' }}>
+              Step {step} of 3
             </div>
-            <LanguageSwitcher />
           </div>
           <h1
             className="magic-title text-5xl font-bold text-transparent bg-clip-text mb-4 transition-all duration-500"
@@ -339,7 +318,7 @@ export default function FortuneTellerPage() {
           </p>
         </header>
 
-        {/* Step 1: User Info */}
+        {/* Step 1: User Info (Name & DOB only) */}
         {step === 1 && (
           <section
             className="backdrop-blur-md rounded-xl p-8 shadow-2xl transition-all duration-500"
@@ -349,11 +328,17 @@ export default function FortuneTellerPage() {
             }}
           >
             <h2
-              className="text-2xl font-semibold mb-6 text-center transition-all duration-500"
+              className="text-2xl font-semibold mb-2 text-center transition-all duration-500"
               style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
             >
               {t('step1Title')}
             </h2>
+            <p
+              className="text-center mb-6 transition-all duration-500"
+              style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+            >
+              {t('step1Subtitle')}
+            </p>
             <form onSubmit={handleFormSubmit} className="space-y-6">
               <div>
                 <label
@@ -400,29 +385,6 @@ export default function FortuneTellerPage() {
                   required
                 />
               </div>
-              <div>
-                <label
-                  htmlFor="question"
-                  className="block mb-2 transition-all duration-500"
-                  style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
-                >
-                  {t('questionLabel')}
-                </label>
-                <textarea
-                  id="question"
-                  value={formData.question}
-                  onChange={(e) => setFormData({ ...formData, question: e.target.value })}
-                  className="w-full px-4 py-3 rounded-lg backdrop-blur-sm focus:outline-none resize-none transition-all duration-300"
-                  style={{
-                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 255, 255, 0.8)',
-                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                    color: isNight ? '#ffffff' : '#2d3748',
-                  }}
-                  placeholder={t('questionPlaceholder')}
-                  rows={4}
-                  required
-                />
-              </div>
               {error && (
                 <p className="text-[#e84393] text-center">{error}</p>
               )}
@@ -443,7 +405,7 @@ export default function FortuneTellerPage() {
           </section>
         )}
 
-        {/* Step 2: Topic Selection */}
+        {/* Step 2: Topic Selection + Question */}
         {step === 2 && (
           <section
             className="backdrop-blur-md rounded-xl p-8 shadow-2xl transition-all duration-500"
@@ -453,94 +415,193 @@ export default function FortuneTellerPage() {
             }}
           >
             <h2
-              className="text-2xl font-semibold mb-6 text-center transition-all duration-500"
+              className="text-2xl font-semibold mb-2 text-center transition-all duration-500"
               style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
             >
               {t('step2Title')}
             </h2>
             <p
-              className="text-center mb-8 transition-all duration-500"
+              className="text-center mb-6 transition-all duration-500"
               style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
             >
-              {t('step2Subtitle')}, {formData.name}
+              {t('step2Greeting')}, <span style={{ fontWeight: 600 }}>{formData.name}</span>! {t('step2Subtitle')}
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {/* Topic Label */}
+            <p
+              className="text-center mb-4 transition-all duration-500"
+              style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+            >
+              {t('step2TopicLabel')}
+            </p>
+
+            {/* 5 Topics Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
               {/* Love */}
               <button
-                onClick={() => handleTopicSelect('love')}
-                className="group p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                onClick={() => handleTopicClick('love')}
+                className={`group p-4 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 ${
+                  selectedTopic === 'love' ? 'ring-2 ring-pink-400 ring-offset-2' : ''
+                }`}
                 style={{
                   background: isNight ? 'rgba(232, 67, 147, 0.2)' : 'rgba(255, 182, 193, 0.4)',
-                  border: isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(255, 105, 180, 0.4)',
+                  border: selectedTopic === 'love'
+                    ? `2px solid ${isNight ? '#fd79a8' : '#d53f8c'}`
+                    : isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(255, 105, 180, 0.4)',
                 }}
               >
-                <div className="text-4xl mb-4">💕</div>
+                <div className="text-3xl mb-2">💕</div>
                 <h3
-                  className="text-xl font-semibold transition-all duration-300"
+                  className="text-sm font-semibold transition-all duration-300"
                   style={{ color: isNight ? '#fd79a8' : '#d53f8c' }}
                 >
                   {t('loveTitle')}
                 </h3>
-                <p
-                  className="text-sm mt-2 transition-all duration-300"
-                  style={{ color: isNight ? 'rgba(253, 121, 168, 0.7)' : 'rgba(213, 63, 140, 0.7)' }}
-                >
-                  {t('loveDesc')}
-                </p>
               </button>
 
               {/* Studies */}
               <button
-                onClick={() => handleTopicSelect('studies')}
-                className="group p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                onClick={() => handleTopicClick('studies')}
+                className={`group p-4 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 ${
+                  selectedTopic === 'studies' ? 'ring-2 ring-blue-400 ring-offset-2' : ''
+                }`}
                 style={{
                   background: isNight ? 'rgba(162, 155, 254, 0.2)' : 'rgba(135, 206, 235, 0.4)',
-                  border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(70, 130, 180, 0.4)',
+                  border: selectedTopic === 'studies'
+                    ? `2px solid ${isNight ? '#a29bfe' : '#3182ce'}`
+                    : isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(70, 130, 180, 0.4)',
                 }}
               >
-                <div className="text-4xl mb-4">📚</div>
+                <div className="text-3xl mb-2">📚</div>
                 <h3
-                  className="text-xl font-semibold transition-all duration-300"
+                  className="text-sm font-semibold transition-all duration-300"
                   style={{ color: isNight ? '#a29bfe' : '#3182ce' }}
                 >
                   {t('studiesTitle')}
                 </h3>
-                <p
-                  className="text-sm mt-2 transition-all duration-300"
-                  style={{ color: isNight ? 'rgba(162, 155, 254, 0.7)' : 'rgba(49, 130, 206, 0.7)' }}
-                >
-                  {t('studiesDesc')}
-                </p>
               </button>
 
               {/* Personality */}
               <button
-                onClick={() => handleTopicSelect('personality')}
-                className="group p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                onClick={() => handleTopicClick('personality')}
+                className={`group p-4 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 ${
+                  selectedTopic === 'personality' ? 'ring-2 ring-yellow-400 ring-offset-2' : ''
+                }`}
                 style={{
                   background: isNight ? 'rgba(255, 234, 167, 0.2)' : 'rgba(255, 217, 61, 0.3)',
-                  border: isNight ? '1px solid rgba(255, 234, 167, 0.3)' : '1px solid rgba(255, 159, 67, 0.4)',
+                  border: selectedTopic === 'personality'
+                    ? `2px solid ${isNight ? '#ffeaa7' : '#c05621'}`
+                    : isNight ? '1px solid rgba(255, 234, 167, 0.3)' : '1px solid rgba(255, 159, 67, 0.4)',
                 }}
               >
-                <div className="text-4xl mb-4">🌟</div>
+                <div className="text-3xl mb-2">🌟</div>
                 <h3
-                  className="text-xl font-semibold transition-all duration-300"
+                  className="text-sm font-semibold transition-all duration-300"
                   style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
                 >
                   {t('personalityTitle')}
                 </h3>
-                <p
-                  className="text-sm mt-2 transition-all duration-300"
-                  style={{ color: isNight ? 'rgba(255, 234, 167, 0.7)' : 'rgba(192, 86, 33, 0.7)' }}
+              </button>
+
+              {/* Health */}
+              <button
+                onClick={() => handleTopicClick('health')}
+                className={`group p-4 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 ${
+                  selectedTopic === 'health' ? 'ring-2 ring-green-400 ring-offset-2' : ''
+                }`}
+                style={{
+                  background: isNight ? 'rgba(46, 204, 113, 0.2)' : 'rgba(144, 238, 144, 0.4)',
+                  border: selectedTopic === 'health'
+                    ? `2px solid ${isNight ? '#2ecc71' : '#27ae60'}`
+                    : isNight ? '1px solid rgba(46, 204, 113, 0.3)' : '1px solid rgba(46, 139, 87, 0.4)',
+                }}
+              >
+                <div className="text-3xl mb-2">🌿</div>
+                <h3
+                  className="text-sm font-semibold transition-all duration-300"
+                  style={{ color: isNight ? '#2ecc71' : '#27ae60' }}
                 >
-                  {t('personalityDesc')}
-                </p>
+                  {t('healthTitle')}
+                </h3>
+              </button>
+
+              {/* Finance */}
+              <button
+                onClick={() => handleTopicClick('finance')}
+                className={`group p-4 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 ${
+                  selectedTopic === 'finance' ? 'ring-2 ring-amber-400 ring-offset-2' : ''
+                }`}
+                style={{
+                  background: isNight ? 'rgba(255, 215, 0, 0.2)' : 'rgba(255, 215, 0, 0.3)',
+                  border: selectedTopic === 'finance'
+                    ? `2px solid ${isNight ? '#ffd700' : '#b8860b'}`
+                    : isNight ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid rgba(184, 134, 11, 0.4)',
+                }}
+              >
+                <div className="text-3xl mb-2">💰</div>
+                <h3
+                  className="text-sm font-semibold transition-all duration-300"
+                  style={{ color: isNight ? '#ffd700' : '#b8860b' }}
+                >
+                  {t('financeTitle')}
+                </h3>
               </button>
             </div>
 
+            {/* Question Form */}
+            <form onSubmit={handleQuestionSubmit} className="space-y-4">
+              <div>
+                <label
+                  htmlFor="question"
+                  className="block mb-2 transition-all duration-500"
+                  style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                >
+                  {t('questionLabel')}
+                </label>
+                <textarea
+                  id="question"
+                  value={question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg backdrop-blur-sm focus:outline-none resize-none transition-all duration-300"
+                  style={{
+                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 255, 255, 0.8)',
+                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
+                    color: isNight ? '#ffffff' : '#2d3748',
+                  }}
+                  placeholder={t('questionPlaceholder')}
+                  rows={3}
+                  required
+                />
+                <p
+                  className="text-xs mt-1 transition-all duration-500"
+                  style={{ color: isNight ? 'rgba(162, 155, 254, 0.5)' : 'rgba(74, 85, 104, 0.5)' }}
+                >
+                  {t('questionHint')}
+                </p>
+              </div>
+
+              {error && (
+                <p className="text-[#e84393] text-center">{error}</p>
+              )}
+
+              <button
+                type="submit"
+                className="w-full py-4 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+                style={{
+                  background: isNight
+                    ? 'linear-gradient(to right, #ffeaa7, #f8b739)'
+                    : 'linear-gradient(to right, #ff9f43, #ffd93d)',
+                  color: isNight ? '#0a0a1a' : '#ffffff',
+                  boxShadow: isNight ? '0 10px 40px rgba(255, 234, 167, 0.2)' : '0 10px 40px rgba(255, 159, 67, 0.3)',
+                }}
+              >
+                {t('submitBtn')}
+              </button>
+            </form>
+
             <button
               onClick={() => setStep(1)}
-              className="mt-8 w-full py-3 rounded-lg transition-all duration-300"
+              className="mt-4 w-full py-3 rounded-lg transition-all duration-300"
               style={{
                 border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
                 color: isNight ? '#a29bfe' : '#4a5568',
@@ -568,10 +629,16 @@ export default function FortuneTellerPage() {
               {t('step3Title')}
             </h2>
             <p
-              className="text-center mb-8 transition-all duration-500"
+              className="text-center mb-2 transition-all duration-500"
               style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
             >
-              {t('step3Subtitle')} <span style={{ color: isNight ? '#fd79a8' : '#d53f8c', fontWeight: 600 }}>{selectedTopic ? topicTranslations[selectedTopic][language] : ''}</span> {t('step3Reading')}
+              {t('step3Subtitle')} <span style={{ color: isNight ? '#fd79a8' : '#d53f8c', fontWeight: 600 }}>{selectedTopic ? topicLabels[selectedTopic] : ''}</span> {t('step3Reading')}
+            </p>
+            <p
+              className="text-center mb-8 text-sm transition-all duration-500"
+              style={{ color: isNight ? 'rgba(162, 155, 254, 0.6)' : 'rgba(74, 85, 104, 0.6)' }}
+            >
+              Your question: "{question}"
             </p>
 
             <div className="flex justify-center mb-8">

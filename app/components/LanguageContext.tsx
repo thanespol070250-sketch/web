@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Language = 'en' | 'th';
+type Language = 'en';
 
 interface LanguageContextType {
   language: Language;
@@ -13,29 +13,34 @@ interface LanguageContextType {
 const translations: Record<Language, Record<string, string>> = {
   en: {
     // Header
-    title: 'Fortune Teller',
-    subtitle: 'Discover your destiny through ancient wisdom',
+    title: 'Fortune Oracle',
+    subtitle: 'Unlock the secrets of your destiny through mystical wisdom',
 
     // Step 1 - User Info
-    step1Title: 'Tell us about yourself',
+    step1Title: 'Welcome Seeker',
+    step1Subtitle: 'Begin your journey into the mystical realm',
     nameLabel: 'Your Name',
     namePlaceholder: 'Enter your name...',
     dobLabel: 'Date of Birth',
-    questionLabel: 'Your Question to the Oracle',
-    questionPlaceholder: 'What would you like to know about your future?',
-    continueBtn: 'Continue to Choose Your Path',
+    continueBtn: 'Begin Your Journey',
     errorFill: 'Please fill in all fields',
 
-    // Step 2 - Topic Selection
-    step2Title: 'Choose Your Destiny Topic',
-    step2Subtitle: 'Select the area of life you seek guidance for',
-    loveTitle: 'Love',
-    loveDesc: 'Romance, relationships, and matters of the heart',
-    studiesTitle: 'Studies',
-    studiesDesc: 'Education, knowledge, and intellectual growth',
-    personalityTitle: 'Personality & Future',
-    personalityDesc: 'Self-discovery, character, and life path',
-    backBtn: 'Back to Personal Info',
+    // Step 2 - Topic & Question
+    step2Title: 'Choose Your Path & Ask Your Question',
+    step2Subtitle: 'Select your destiny topic and share what you seek to know',
+    step2Greeting: 'Welcome',
+    step2TopicLabel: 'Select Your Destiny Topic',
+    loveTitle: 'Love & Relationships',
+    loveDesc: 'Romance, soulmates, heart connections, and relationship guidance',
+    studiesTitle: 'Career & Studies',
+    studiesDesc: 'Education, professional growth, knowledge, and life goals',
+    personalityTitle: 'Personal Growth & Future',
+    personalityDesc: 'Self-discovery, character development, and life path insights',
+    questionLabel: 'Your Question to the Oracle',
+    questionPlaceholder: 'What mysteries would you like the oracle to reveal for you?',
+    questionHint: 'Be specific about what guidance you seek...',
+    submitBtn: 'Seek Your Fortune',
+    backBtn: 'Return to Introduction',
 
     // Step 3 - Cards
     step3Title: 'Draw Your Oracle Card',
@@ -43,69 +48,28 @@ const translations: Record<Language, Record<string, string>> = {
     step3Reading: 'reading',
     fortuneTitle: 'Your Fortune Reading',
     drawAnotherBtn: 'Draw Another Card',
-    startNewBtn: 'Start New Reading',
-    backTopicBtn: 'Back to Topic Selection',
-    shuffling: 'Shuffling the cards...',
-    clickCard: 'Click a card to reveal your destiny...',
-    consulting: 'Consulting the oracle...',
+    startNewBtn: 'Begin New Reading',
+    backTopicBtn: 'Return to Question',
+    shuffling: 'The cards are being blessed...',
+    clickCard: 'Touch a card to reveal your destiny...',
+    consulting: 'The oracle is channeling your fortune...',
+    cardReveal: 'Your chosen card reveals...',
 
     // Footer
-    footer: 'Mystical wisdom powered by ancient algorithms',
+    footer: 'Mystical wisdom awaits those who seek with an open heart',
 
     // Error
-    errorConnect: 'Failed to connect to the oracle',
-    errorFortune: 'Failed to get fortune',
+    errorConnect: 'The oracle cannot be reached at this moment',
+    errorFortune: 'Failed to receive fortune guidance',
 
     // Card Deck Button
     drawCardBtn: 'Draw Another Card',
-  },
-  th: {
-    // Header
-    title: 'ผู้ทำนายอนาคต',
-    subtitle: 'ค้นพบโชคชะตาของคุณผ่านความรู้โบราณ',
 
-    // Step 1 - User Info
-    step1Title: 'บอกข้อมูลเกี่ยวกับคุณ',
-    nameLabel: 'ชื่อของคุณ',
-    namePlaceholder: 'กรอกชื่อของคุณ...',
-    dobLabel: 'วันเกิด',
-    questionLabel: 'คำถามที่คุณต้องการถามผู้ทำนาย',
-    questionPlaceholder: 'สิ่งที่คุณอยากรู้เกี่ยวกับอนาคตของคุณ?',
-    continueBtn: 'ดำเนินการเลือกเส้นทางของคุณ',
-    errorFill: 'กรุณากรอกข้อมูลทั้งหมด',
-
-    // Step 2 - Topic Selection
-    step2Title: 'เลือกหัวข้อโชคชะตา',
-    step2Subtitle: 'เลือกด้านชีวิตที่คุณต้องการคำแนะนำ',
-    loveTitle: 'ความรัก',
-    loveDesc: 'ความสัมพันธ์ หัวใจ และเรื่องราวของความรัก',
-    studiesTitle: 'การศึกษา',
-    studiesDesc: 'ความรู้ การเรียน และการพัฒนาทางปัญญา',
-    personalityTitle: 'บุคลิก & อนาคต',
-    personalityDesc: 'การค้นพบตัวเอง บุคลิกลักษณ์ และเส้นทางชีวิต',
-    backBtn: 'กลับไปกรอกข้อมูลส่วนตัว',
-
-    // Step 3 - Cards
-    step3Title: 'หยิบไพ่ผู้ทำนาย',
-    step3Subtitle: 'ให้โชคชะตานำมือคุณหยิบไพ่สำหรับการทำนาย',
-    step3Reading: 'ของคุณ',
-    fortuneTitle: 'การทำนายอนาคตของคุณ',
-    drawAnotherBtn: 'หยิบไพ่ใบอื่น',
-    startNewBtn: 'เริ่มการทำนายใหม่',
-    backTopicBtn: 'กลับไปเลือกหัวข้อ',
-    shuffling: 'กำลังสับไพ่...',
-    clickCard: 'คลิกไพ่เพื่อเปิดโชคชะตาของคุณ...',
-    consulting: 'กำลังปรึกษาผู้ทำนาย...',
-
-    // Footer
-    footer: 'ความรู้ลึกลับจากอัลกอริทึมโบราณ',
-
-    // Error
-    errorConnect: 'ไม่สามารถเชื่อมต่อกับผู้ทำนาย',
-    errorFortune: 'ไม่สามารถทำนายได้',
-
-    // Card Deck Button
-    drawCardBtn: 'หยิบไพ่ใบอื่น',
+    // Additional fortune topics
+    healthTitle: 'Health & Wellness',
+    healthDesc: 'Physical vitality, mental peace, and spiritual balance',
+    financeTitle: 'Finance & Prosperity',
+    financeDesc: 'Wealth, abundance, and material opportunities',
   },
 };
 
@@ -117,7 +81,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Check localStorage for saved language preference
     const savedLang = localStorage.getItem('fortune-language');
-    if (savedLang === 'en' || savedLang === 'th') {
+    if (savedLang === 'en') {
       setLanguage(savedLang);
     }
   }, []);

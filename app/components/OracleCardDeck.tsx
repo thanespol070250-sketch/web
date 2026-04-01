@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useLanguage } from './LanguageContext';
 import { useTheme } from './ThemeContext';
 
 interface OracleCardDeckProps {
@@ -13,113 +12,86 @@ interface OracleCardDeckProps {
 export interface OracleCard {
   id: number;
   name: string;
-  nameThai: string;
   symbol: string;
   meaning: string;
-  meaningThai: string;
 }
 
 const oracleCards: OracleCard[] = [
   {
     id: 1,
     name: 'The Moon',
-    nameThai: 'ดวงจันทร์',
     symbol: '🌙',
     meaning: 'The Moon illuminates the shadows of your soul. Trust your intuition and embrace the mysteries that lie beneath the surface. Hidden truths are waiting to be discovered in the quiet moments of reflection.',
-    meaningThai: 'ดวงจันทร์ส่องแสงในเงามืดของจิตใจคุณ เชื่อมั่นในสัญชาตญาณและยอมรับความลึกลับที่ซ่อนอยู่ ความจริงที่ถูกปิดบังรอให้คุณค้นพบในช่วงเวลาแห่งการสงบนิ่ง'
   },
   {
     id: 2,
     name: 'The Sun',
-    nameThai: 'ดวงอาทิตย์',
     symbol: '☀️',
     meaning: 'The Sun shines brightly upon your path, bringing warmth, joy, and abundant energy. Success and vitality flow toward you. Embrace optimism and let your authentic self radiate with confidence.',
-    meaningThai: 'ดวงอาทิตย์ส่องแสงสว่างบนเส้นทางของคุณ นำความอบอุ่น ความสุข และพลังงานมากมาย ความสำเร็จและพลังชีวิตไหลเข้าหาคุณ ยอมรับความคาดหวังและปล่อยให้ตัวตนที่แท้จริงของคุณเปล่งประกาย'
   },
   {
     id: 3,
     name: 'The Star',
-    nameThai: 'ดวงดาว',
     symbol: '⭐',
     meaning: 'The Star guides you toward hope and inspiration. You are being called to trust in the universe\'s plan for you. Spiritual guidance is available—keep faith in your dreams and reach for the stars.',
-    meaningThai: 'ดวงดาวนำทางคุณไปสู้ความหวังและแรงบันดาลใจ คุณถูกเรียกร้องให้เชื่อมั่นในแผนการของจักรวาล การนำทางทางจิตวิญญาณมีอยู่—รักษาความเชื่อมั่นในความฝันและมองไปสู้ดวงดาว'
   },
   {
     id: 4,
     name: 'The Heart',
-    nameThai: 'หัวใจ',
     symbol: '❤️',
     meaning: 'The Heart pulses with love and deep emotional connections. Open yourself to compassion, both giving and receiving. Relationships flourish when nurtured with authenticity and vulnerability.',
-    meaningThai: 'หัวใจเต้นระเรื่องด้วยความรักและการเชื่อมโยงทางอารมณ์อันลึกซึ้ง เปิดใจรับความเมตตา ทั้งการให้และรับ ความสัมพันธ์จะเบิกบานเมื่อได้รับการดูแลด้วยความจริงใจและการเปิดเผย'
   },
   {
     id: 5,
     name: 'The Key',
-    nameThai: 'กุญแจ',
     symbol: '🔑',
     meaning: 'The Key appears to unlock doors that have long been closed. Solutions to your challenges are within reach. Trust that the universe is providing opportunities for growth and transformation.',
-    meaningThai: 'กุญแจปรากฏเพื่อเปิดประตูที่ปิดมานาน ทางแก้ไขปัญหาของคุณอยู่ใกล้แค่เอื้อม เชื่อมั่นว่าจักรวาลมอบโอกาสสำหรับการเติบโตและการเปลี่ยนแปลง'
   },
   {
     id: 6,
     name: 'The Book',
-    nameThai: 'หนังสือ',
     symbol: '📖',
     meaning: 'The Book holds ancient wisdom and secrets waiting to be revealed. Knowledge comes to those who seek it with an open mind. Pay attention to signs and messages from unexpected sources.',
-    meaningThai: 'หนังสือเก็บความรู้โบราณและความลับที่รอถูกเปิดเผย ความรู้จะมาถึงผู้ที่แสวงหาด้วยใจที่เปิดกว้าง จับใจสังเกตสัญลักษณ์และข้อความจากแหล่งที่ไม่คาดคิด'
   },
   {
     id: 7,
     name: 'The Path',
-    nameThai: 'เส้นทาง',
     symbol: '🛤️',
     meaning: 'The Path unfolds before you, winding through destiny\'s landscape. Your journey is unique and sacred. Each step brings you closer to your true purpose—walk with courage and intention.',
-    meaningThai: 'เส้นทางเปิดออกก่อนคุณ วิ่งไปตามภูมิทัศน์ของโชคชะตา การเดินทางของคุณมีความพิเศษและศักดิ์สิทธิ์ ทุกก้าวนำคุณใกล้ชิดกับจุดประสงค์ที่แท้จริง—เดินด้วยความกล้าหาญและความมุ่งมั่น'
   },
   {
     id: 8,
     name: 'The Candle',
-    nameThai: 'เทียน',
     symbol: '🕯️',
     meaning: 'The Candle illuminates the darkness, revealing what was once hidden. Inner wisdom burns bright within you. Trust your inner light to guide you through uncertain times and illuminate your way.',
-    meaningThai: 'เทียนส่องแสงในความมืด เปิดเผยสิ่งที่เคยถูกซ่อน ความรู้ภายในส่องแสงสว่างในตัวคุณ เชื่อมั่นในแสงภายในที่จะนำทางคุณผ่านช่วงเวลาที่ไม่แน่นอนและส่องทางของคุณ'
   },
   {
     id: 9,
     name: 'The Anchor',
-    nameThai: 'สมอ',
     symbol: '⚓',
     meaning: 'The Anchor grounds you in stability and strength. In times of turbulence, remain steadfast in your values. You have the resilience to weather any storm—find peace in your inner foundation.',
-    meaningThai: 'สมอยึดคุณให้มั่นคงแข็งแรง ในช่วงเวลาแห่งความวุ่นวาย ยังคงยืนหยัดในค่านิยมของคุณ คุณมีความแข็งแกร่งที่จะผ่านพ้นพายุใดๆ—หาความสงบในรากฐานภายใน'
   },
   {
     id: 10,
     name: 'The Tower',
-    nameThai: 'ป้อมปราการ',
     symbol: '🏛️',
     meaning: 'The Tower stands as a testament to your achievements and ambitions. You are building something lasting and meaningful. Reach for new heights while honoring the foundations you\'ve established.',
-    meaningThai: 'ป้อมปราการยืนหยัดเป็นพิธีกรณ์แห่งความสำเร็จและความใฝ่ฝันของคุณ คุณกำลังสร้างสิ่งที่ยั่งยืนและมีความหมาย มองไปสู่ความสูงใหม่พร้อมเคารพรากฐานที่คุณสร้าง'
   },
   {
     id: 11,
     name: 'The Butterfly',
-    nameThai: 'ผีเสื้อ',
     symbol: '🦋',
     meaning: 'The Butterfly emerges from its cocoon, symbolizing beautiful transformation. Change is not to be feared but embraced. You are evolving into a more magnificent version of yourself—spread your wings.',
-    meaningThai: 'ผีเสื้อโผล่ออกจากรัง สื่อถึงการเปลี่ยนแปลงอันสวยงาม การเปลี่ยนแปลงไม่ควรถูกกลัวแต่ควรถูกยอมรับ คุณกำลังเปลี่ยนแปลงเป็นเวอร์ชันที่ยิ่งใหญ่ของตัวเอง—กางปีกออก'
   },
   {
     id: 12,
     name: 'The Lotus',
-    nameThai: 'ดอกบัว',
     symbol: '🪷',
     meaning: 'The Lotus rises pure and beautiful from muddy waters. Spiritual awakening and inner peace await you. Through adversity comes growth—embrace your journey toward enlightenment and serenity.',
-    meaningThai: 'ดอกบัวผุดขึ้นบริสุทธิ์และสวยงามจากน้ำที่ขุ่นมัว การตื่นรู้ทางจิตวิญญาณและความสงบภายใจรอคุณ ผ่านความยากลำบากมาซึ่งการเติบโต—ยอมรับการเดินทางไปสู่ความรู้แจ้งและความสงบ'
   },
 ];
 
 export default function OracleCardDeck({ onCardSelect, onReset, onShuffle }: OracleCardDeckProps) {
-  const { t, language } = useLanguage();
   const { theme } = useTheme();
   const isNight = theme === 'night';
   const [cards, setCards] = useState<OracleCard[]>(() =>
@@ -209,7 +181,7 @@ export default function OracleCardDeck({ onCardSelect, onReset, onShuffle }: Ora
             className="text-2xl font-bold tracking-wide text-center px-4 transition-all duration-500"
             style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
           >
-            {language === 'en' ? revealedCard.name : revealedCard.nameThai}
+            {revealedCard.name}
           </h3>
 
           {/* Divider */}
@@ -228,7 +200,7 @@ export default function OracleCardDeck({ onCardSelect, onReset, onShuffle }: Ora
               className="text-base text-center leading-relaxed transition-all duration-500"
               style={{ color: isNight ? '#ffffff' : '#2d3748' }}
             >
-              {language === 'en' ? revealedCard.meaning : revealedCard.meaningThai}
+              {revealedCard.meaning}
             </p>
           </div>
 
@@ -280,7 +252,7 @@ export default function OracleCardDeck({ onCardSelect, onReset, onShuffle }: Ora
             className="text-xl mb-4 animate-pulse text-center transition-all duration-500"
             style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
           >
-            {t('shuffling')}
+            The cards are being blessed...
           </div>
         )}
         <div className={`grid grid-cols-4 md:grid-cols-6 gap-3 ${isShuffling ? 'shuffle-animation' : ''}`}>
@@ -347,7 +319,7 @@ export default function OracleCardDeck({ onCardSelect, onReset, onShuffle }: Ora
           className="text-sm animate-pulse text-center transition-all duration-500"
           style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
         >
-          {t('clickCard')}
+          Touch a card to reveal your destiny...
         </p>
       )}
     </div>
