@@ -44,7 +44,7 @@ const topicIcons: Record<Topic, string> = {
 };
 
 export default function FortuneTellerPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { theme } = useTheme();
   const isNight = theme === 'night';
   const [step, setStep] = useState(1);
@@ -97,6 +97,7 @@ export default function FortuneTellerPage() {
           dateOfBirth: formData.dateOfBirth,
           question: question,
           mode: 'direct',
+          language: language,
         }),
       });
 
@@ -133,6 +134,7 @@ export default function FortuneTellerPage() {
           dateOfBirth: formData.dateOfBirth,
           question: question,
           mode: 'prophecy',
+          language: language,
         }),
       });
 
@@ -181,6 +183,7 @@ export default function FortuneTellerPage() {
           question: question,
           topic: selectedTopic,
           card: card,
+          language: language,
         }),
       });
 
@@ -518,8 +521,8 @@ export default function FortuneTellerPage() {
                   {t('modeSelectionLabel')}
                 </p>
 
-                {/* Two Mode Options */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Three Mode Options */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {/* Mode 1: Topic Selection */}
                   <button
                     onClick={() => handleModeSelect('topic')}

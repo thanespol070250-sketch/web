@@ -32,19 +32,23 @@ const fallbackFortunes = {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, dateOfBirth, question, topic, card, mode } = body;
+    const { name, dateOfBirth, question, topic, card, mode, language } = body;
+
+    const langInstruction = language === 'th'
+      ? 'Respond entirely in Thai language. Use poetic and mystical Thai expressions appropriate for fortune telling.'
+      : 'Respond entirely in English language with mystical poetic style.';
 
     // For direct question mode, only name, dateOfBirth, and question are required
     if (!name || !dateOfBirth || !question) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: language === 'th' ? 'ข้อมูลไม่ครบถ้วน' : 'Missing required fields' },
         { status: 400 }
       );
     }
 
     // Direct question mode - no topic/card needed
     if (mode === 'direct') {
-      const systemPrompt = `You are a mystical fortune oracle with ancient wisdom. You speak in an enchanting, poetic style while remaining helpful and insightful. Your readings are mysterious yet meaningful, combining elements of astrology, numerology, and oracle wisdom. Keep responses concise but impactful (2-3 paragraphs max). Always address the seeker by name and reference their specific question. Provide wisdom and guidance on any topic the seeker asks about.`;
+      const systemPrompt = `You are a mystical fortune oracle with ancient wisdom. You speak in an enchanting, poetic style while remaining helpful and insightful. Your readings are mysterious yet meaningful, combining elements of astrology, numerology, and oracle wisdom. Keep responses concise but impactful (2-3 paragraphs max). Always address the seeker by name and reference their specific question. Provide wisdom and guidance on any topic the seeker asks about. ${langInstruction}`;
 
       const userPrompt = `The seeker ${name}, born on ${dateOfBirth}, asks: "${question}"
 
@@ -86,6 +90,69 @@ Based on their birth date and specific question, provide a personalized and insi
       return NextResponse.json({ fortune });
     }
 
+    // Prophecy mode - Life guidance
+    if (mode === 'prophecy') {
+      const systemPrompt = `You are an ancient prophet and oracle who channels divine wisdom about life paths and destiny. You speak in a profound, sacred tone as if delivering a prophecy from the cosmic realm. Your guidance focuses on how to live life according to one's destiny, offering deep spiritual insights about:
+- The seeker's soul purpose and life mission
+- Principles and values they should embrace
+- Paths they should follow or avoid
+- Spiritual practices that will benefit them
+- How to align with cosmic forces and universal wisdom
+- Lessons they need to learn in this lifetime
+- Ways to find inner peace and fulfillment
+- Connection between their actions and fate
+
+Keep responses profound but practical (3-4 paragraphs). Speak with authority and compassion, as a prophet guiding a seeker through their life journey. Always address them by name and provide actionable guidance they can apply to their daily life. ${langInstruction}`;
+
+      const userPrompt = `The seeker ${name}, born on ${dateOfBirth}, seeks prophetic guidance: "${question}"
+
+Based on their birth date, cosmic alignment, and their request for life guidance, deliver a sacred prophecy about how they should live their life. Provide deep spiritual wisdom, practical principles to follow, and insights about their destiny. Help them understand their life path according to the prophecy.`;
+
+      // Check if API key is configured
+      if (!process.env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY === 'your_api_key_here') {
+        const prophecyFallback = [
+          "Your soul carries a sacred mission that has been written in the stars since before your birth. Live each day with intention and mindfulness, for your actions ripple through the fabric of destiny. Seek balance in all things—work and rest, giving and receiving, action and reflection. The universe whispers its wisdom through the quiet moments; learn to listen. Your path is illuminated by compassion—extend it to yourself and others, and you will find doors opening where walls once stood. Trust the journey, even when the road seems unclear, for the prophecy unfolds in divine timing.",
+          "The ancient ones see your spirit seeking its true north. Live according to the principle of authenticity—let your outer life reflect your inner truth. What you seek is already within you; the prophecy asks you to uncover it through daily practice of presence and gratitude. Walk gently upon the earth, leaving traces of kindness wherever you go. Your destiny is intertwined with service to others—find ways to contribute, and abundance will flow to you naturally. When faced with choices, ask not what is easiest, but what aligns with your soul's highest calling. This is how you live according to the prophecy.",
+          "In the scroll of your destiny, three truths are written: you are here to learn, to love, and to leave a legacy. Embrace each lesson that life presents, for they are gifts from the cosmos wrapped in challenge. Let love guide your decisions—not just romantic love, but love for humanity, for nature, for the journey itself. Create something that will outlast your time here: kindness shared, wisdom imparted, lives touched. The prophecy reveals that your greatest power lies in gentleness, your strongest weapon is patience, and your most reliable compass is your own heart. Trust these gifts, and your life will unfold as the sacred text foretold."
+        ];
+        const randomFortune = prophecyFallback[Math.floor(Math.random() * prophecyFallback.length)];
+        return NextResponse.json({ fortune: randomFortune });
+      }
+
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+          'X-Title': 'Fortune Oracle',
+        },
+        body: JSON.stringify({
+          model: 'z-ai/glm5',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+          max_tokens: 600,
+          temperature: 0.85,
+        }),
+      });
+
+      if (!response.ok) {
+        const prophecyFallback = [
+          "Your soul carries a sacred mission that has been written in the stars since before your birth. Live each day with intention and mindfulness, for your actions ripple through the fabric of destiny. Seek balance in all things—work and rest, giving and receiving, action and reflection. The universe whispers its wisdom through the quiet moments; learn to listen. Your path is illuminated by compassion—extend it to yourself and others, and you will find doors opening where walls once stood. Trust the journey, even when the road seems unclear, for the prophecy unfolds in divine timing.",
+          "The ancient ones see your spirit seeking its true north. Live according to the principle of authenticity—let your outer life reflect your inner truth. What you seek is already within you; the prophecy asks you to uncover it through daily practice of presence and gratitude. Walk gently upon the earth, leaving traces of kindness wherever you go. Your destiny is intertwined with service to others—find ways to contribute, and abundance will flow to you naturally. When faced with choices, ask not what is easiest, but what aligns with your soul's highest calling. This is how you live according to the prophecy."
+        ];
+        const randomFortune = prophecyFallback[Math.floor(Math.random() * prophecyFallback.length)];
+        return NextResponse.json({ fortune: randomFortune });
+      }
+
+      const data = await response.json();
+      const fortune = data.choices?.[0]?.message?.content || 'The ancient scrolls are silent today...';
+
+      return NextResponse.json({ fortune });
+    }
+
     // Topic mode - requires topic
     if (!topic) {
       return NextResponse.json(
@@ -104,7 +171,7 @@ Based on their birth date and specific question, provide a personalized and insi
 
     const cardInfo = card ? `They have drawn the oracle card "${card.name}" (${card.symbol}), which represents: "${card.meaning}"` : '';
 
-    const systemPrompt = `You are a mystical fortune oracle with ancient wisdom. You speak in an enchanting, poetic style while remaining helpful and insightful. Your readings are mysterious yet meaningful, combining elements of astrology, numerology, and oracle wisdom. Keep responses concise but impactful (2-3 paragraphs max). Always address the seeker by name and reference their specific question. ${topicPrompts[topic as keyof typeof topicPrompts]}`;
+    const systemPrompt = `You are a mystical fortune oracle with ancient wisdom. You speak in an enchanting, poetic style while remaining helpful and insightful. Your readings are mysterious yet meaningful, combining elements of astrology, numerology, and oracle wisdom. Keep responses concise but impactful (2-3 paragraphs max). Always address the seeker by name and reference their specific question. ${topicPrompts[topic as keyof typeof topicPrompts]} ${langInstruction}`;
 
     const userPrompt = `The seeker ${name}, born on ${dateOfBirth}, asks: "${question}"
 ${cardInfo}

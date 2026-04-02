@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type Language = 'en';
+type Language = 'en' | 'th';
 
 interface LanguageContextType {
   language: Language;
@@ -15,6 +15,10 @@ const translations: Record<Language, Record<string, string>> = {
     // Header
     title: 'Fortune Oracle',
     subtitle: 'Unlock the secrets of your destiny through mystical wisdom',
+
+    // Language
+    languageEn: 'English',
+    languageTh: 'Thai',
 
     // Step 1 - User Info
     step1Title: 'Welcome Seeker',
@@ -88,6 +92,87 @@ const translations: Record<Language, Record<string, string>> = {
     financeTitle: 'Finance & Prosperity',
     financeDesc: 'Wealth, abundance, and material opportunities',
   },
+  th: {
+    // Header
+    title: 'ผู้ทำนายโชคชะตา',
+    subtitle: 'เปิดเผยความลับของชะตาชีวิตผ่านภูมิปัญญาอันศักดิ์สิทธิ์',
+
+    // Language
+    languageEn: 'อังกฤษ',
+    languageTh: 'ไทย',
+
+    // Step 1 - User Info
+    step1Title: 'ยินดีต้อนรับผู้แสวงหา',
+    step1Subtitle: 'เริ่มต้นการเดินทางเข้าสู่โลกแห่งความศักดิ์สิทธิ์',
+    nameLabel: 'ชื่อของคุณ',
+    namePlaceholder: 'กรอกชื่อของคุณ...',
+    dobLabel: 'วันเกิด',
+    continueBtn: 'เริ่มต้นการเดินทาง',
+    errorFill: 'กรุณากรอกข้อมูลให้ครบถ้วน',
+
+    // Step 2 - Topic & Question
+    step2Title: 'เลือกเส้นทางและถามคำถาม',
+    step2Subtitle: 'เลือกหัวข้อชะตาชีวิตและแบ่งปันสิ่งที่คุณต้องการรู้',
+    step2Greeting: 'ยินดีต้อนรับ',
+    step2TopicLabel: 'เลือกหัวข้อชะตาชีวิต',
+    modeSelectionLabel: 'เลือกวิธีที่คุณต้องการรับคำทำนาย',
+    modeTopicTitle: 'เลือกสิ่งที่ต้องการทำนาย',
+    modeTopicDesc: 'เลือกหัวข้อและหยิบไพ่โอราเคิลเพื่อรับคำแนะนำอันศักดิ์สิทธิ์',
+    modeQuestionTitle: 'ถามคำถาม',
+    modeQuestionDesc: 'ถามคำถามใดๆ และรับคำตอบโดยตรงจากผู้ทำนาย',
+    prophecyLifeTitle: 'คำทำนายเส้นทางชีวิต',
+    prophecyLifeDesc: 'รับภูมิปัญญาอันศักดิ์สิทธิ์เกี่ยวกับการดำเนินชีวิตตามชะตา',
+    prophecyLifeBtn: 'ขอคำทำนายชีวิต',
+    prophecyLifePlaceholder: 'ด้านใดของชีวิตที่คุณต้องการคำแนะนำ? (เช่น ความสัมพันธ์, เส้นทางอาชีพ, สันติภายใน...)',
+    directQuestionLabel: 'แบ่งปันคำถามของคุณกับผู้ทำนาย',
+    yourQuestionLabel: 'คำถามของคุณ',
+    directQuestionPlaceholder: 'คุณต้องการรู้อะไร? ถามได้ทุกสิ่ง...',
+    askOracleBtn: 'ถามผู้ทำนาย',
+    oracleAnswerTitle: 'ผู้ทำนายตอบ',
+    yourQuestionWas: 'คุณถามว่า',
+    askAnotherBtn: 'ถามคำถามอื่น',
+    backToModeBtn: 'เลือกโหมดอื่น',
+    loveTitle: 'ความรักและความสัมพันธ์',
+    loveDesc: 'ความรัก, คู่แท้, ความเชื่อมโยงของหัวใจ, และคำแนะนำเกี่ยวกับความสัมพันธ์',
+    studiesTitle: 'อาชีพและการศึกษา',
+    studiesDesc: 'การศึกษา, การเติบโตในอาชีพ, ความรู้, และเป้าหมายในชีวิต',
+    personalityTitle: 'การเติบโตส่วนบุคคลและอนาคต',
+    personalityDesc: 'การค้นพบตนเอง, การพัฒนาบุคลิกภาพ, และความเข้าใจเส้นทางชีวิต',
+    questionLabel: 'คำถามของคุณถึงผู้ทำนาย',
+    questionPlaceholder: 'ความลับใดที่คุณต้องการให้ผู้ทำนายเปิดเผย?',
+    questionHint: 'ระบุสิ่งที่คุณต้องการคำแนะนำ...',
+    submitBtn: 'ขอคำทำนาย',
+    backBtn: 'กลับไปหน้าแรก',
+
+    // Step 3 - Cards
+    step3Title: 'หยิบไพ่โอราเคิล',
+    step3Subtitle: 'ให้ชะตานำพามือของคุณขณะหยิบไพ่เพื่อ',
+    step3Reading: 'การทำนาย',
+    fortuneTitle: 'คำทำนายของคุณ',
+    drawAnotherBtn: 'หยิบไพ่อีกครั้ง',
+    startNewBtn: 'เริ่มการทำนายใหม่',
+    backTopicBtn: 'กลับไปคำถาม',
+    shuffling: 'ไพ่กำลังถูกอวมอง...',
+    clickCard: 'แตะไพ่เพื่อเปิดเผยชะตาของคุณ...',
+    consulting: 'ผู้ทำนายกำลังส่งคำทำนาย...',
+    cardReveal: 'ไพ่ที่คุณเลือกเปิดเผย...',
+
+    // Footer
+    footer: 'ภูมิปัญญาอันศักดิ์สิทธิ์รอคอยผู้ที่แสวงหาด้วยหัวใจที่เปิดกว้าง',
+
+    // Error
+    errorConnect: 'ไม่สามารถติดต่อผู้ทำนายได้ในขณะนี้',
+    errorFortune: 'ไม่สามารถรับคำทำนายได้',
+
+    // Card Deck Button
+    drawCardBtn: 'หยิบไพ่อีกครั้ง',
+
+    // Additional fortune topics
+    healthTitle: 'สุขภาพและความเป็นอยู่ที่ดี',
+    healthDesc: 'พลังกาย, สันติจิต, และความสมดุลของวิญญาณ',
+    financeTitle: 'การเงินและความมั่งคั่ง',
+    financeDesc: 'ความมั่งคั่ง, ความอุดมสมบูรณ์, และโอกาสทางวัตถุ',
+  },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -98,7 +183,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Check localStorage for saved language preference
     const savedLang = localStorage.getItem('fortune-language');
-    if (savedLang === 'en') {
+    if (savedLang === 'en' || savedLang === 'th') {
       setLanguage(savedLang);
     }
   }, []);
