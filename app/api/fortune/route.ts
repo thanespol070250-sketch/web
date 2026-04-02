@@ -32,11 +32,64 @@ const fallbackFortunes = {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, dateOfBirth, question, topic, card } = body;
+    const { name, dateOfBirth, question, topic, card, mode } = body;
 
-    if (!name || !dateOfBirth || !question || !topic) {
+    // For direct question mode, only name, dateOfBirth, and question are required
+    if (!name || !dateOfBirth || !question) {
       return NextResponse.json(
         { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
+
+    // Direct question mode - no topic/card needed
+    if (mode === 'direct') {
+      const systemPrompt = `You are a mystical fortune oracle with ancient wisdom. You speak in an enchanting, poetic style while remaining helpful and insightful. Your readings are mysterious yet meaningful, combining elements of astrology, numerology, and oracle wisdom. Keep responses concise but impactful (2-3 paragraphs max). Always address the seeker by name and reference their specific question. Provide wisdom and guidance on any topic the seeker asks about.`;
+
+      const userPrompt = `The seeker ${name}, born on ${dateOfBirth}, asks: "${question}"
+
+Based on their birth date and specific question, provide a personalized and insightful response. Include mystical elements, practical guidance, and address their question directly.`;
+
+      // Check if API key is configured
+      if (!process.env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY === 'your_api_key_here') {
+        const randomFortune = fallbackFortunes.personality[Math.floor(Math.random() * fallbackFortunes.personality.length)];
+        return NextResponse.json({ fortune: randomFortune });
+      }
+
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+          'X-Title': 'Fortune Oracle',
+        },
+        body: JSON.stringify({
+          model: 'z-ai/glm5',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+          max_tokens: 500,
+          temperature: 0.8,
+        }),
+      });
+
+      if (!response.ok) {
+        const randomFortune = fallbackFortunes.personality[Math.floor(Math.random() * fallbackFortunes.personality.length)];
+        return NextResponse.json({ fortune: randomFortune });
+      }
+
+      const data = await response.json();
+      const fortune = data.choices?.[0]?.message?.content || 'The stars are silent today...';
+
+      return NextResponse.json({ fortune });
+    }
+
+    // Topic mode - requires topic
+    if (!topic) {
+      return NextResponse.json(
+        { error: 'Missing topic for topic mode' },
         { status: 400 }
       );
     }
