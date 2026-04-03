@@ -195,7 +195,7 @@ Based on their birth date, specific question, and the oracle card they drew, pro
         'X-Title': 'Fortune Oracle',
       },
       body: JSON.stringify({
-        model: 'z-ai/glm-5', // Using GLM-5 model as requested
+        model: 'z-ai/glm5', // Using GLM-5 model as requested
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
@@ -214,7 +214,6 @@ Based on their birth date, specific question, and the oracle card they drew, pro
 
     const data = await response.json();
     const fortune = data.choices?.[0]?.message?.content || 'The stars are silent today...';
-
     return NextResponse.json({ fortune });
   } catch (error) {
     console.error('Fortune API error:', error);

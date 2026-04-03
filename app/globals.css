@@ -50,6 +50,26 @@ h2, h3, h4, h5, h6 {
   }
 }
 
+/* Misty morning shimmer animation */
+@keyframes misty-shimmer {
+  0% {
+    opacity: 0.3;
+    transform: translateX(-10%) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(5%) scale(1.05);
+  }
+  100% {
+    opacity: 0.3;
+    transform: translateX(10%) scale(1);
+  }
+}
+
+.animate-misty-shimmer {
+  animation: misty-shimmer 8s ease-in-out infinite;
+}
+
 /* Floating particles animation */
 @keyframes float {
   0%, 100% {
@@ -135,44 +155,87 @@ h2, h3, h4, h5, h6 {
   animation-delay: -8s;
 }
 
-/* Cloud animations for day theme */
+/* Aladdin floating animations - dreamy golden hour flight */
+@keyframes aladdin-1 {
+  0% { transform: translate(8vw, 25vh) rotate(5deg) scale(1); }
+  20% { transform: translate(75vw, 15vh) rotate(-8deg) scale(1.1); }
+  40% { transform: translate(65vw, 55vh) rotate(12deg) scale(0.95); }
+  60% { transform: translate(20vw, 70vh) rotate(-5deg) scale(1.05); }
+  80% { transform: translate(85vw, 35vh) rotate(8deg) scale(0.9); }
+  100% { transform: translate(8vw, 25vh) rotate(5deg) scale(1); }
+}
+
+@keyframes aladdin-2 {
+  0% { transform: translate(80vw, 65vh) rotate(-10deg) scale(0.9); }
+  25% { transform: translate(15vw, 75vh) rotate(15deg) scale(1.15); }
+  50% { transform: translate(30vw, 20vh) rotate(-12deg) scale(1); }
+  75% { transform: translate(78vw, 40vh) rotate(8deg) scale(0.85); }
+  100% { transform: translate(80vw, 65vh) rotate(-10deg) scale(0.9); }
+}
+
+@keyframes aladdin-3 {
+  0% { transform: translate(45vw, 45vh) rotate(8deg) scale(1); }
+  16% { transform: translate(25vw, 30vh) rotate(-15deg) scale(1.2); }
+  33% { transform: translate(70vw, 18vh) rotate(10deg) scale(0.92); }
+  50% { transform: translate(85vw, 65vh) rotate(-8deg) scale(1.08); }
+  66% { transform: translate(35vw, 80vh) rotate(18deg) scale(0.95); }
+  83% { transform: translate(55vw, 35vh) rotate(-12deg) scale(1.1); }
+  100% { transform: translate(45vw, 45vh) rotate(8deg) scale(1); }
+}
+
+@keyframes aladdin-4 {
+  0% { transform: translate(12vw, 80vh) rotate(-8deg) scale(1.1); }
+  33% { transform: translate(82vw, 25vh) rotate(18deg) scale(0.85); }
+  66% { transform: translate(45vw, 50vh) rotate(-10deg) scale(1); }
+  100% { transform: translate(12vw, 80vh) rotate(-8deg) scale(1.1); }
+}
+
+@keyframes aladdin-5 {
+  0% { transform: translate(88vw, 30vh) rotate(12deg) scale(0.95); }
+  25% { transform: translate(20vw, 15vh) rotate(-18deg) scale(1.1); }
+  50% { transform: translate(50vw, 75vh) rotate(8deg) scale(0.88); }
+  75% { transform: translate(75vw, 55vh) rotate(-15deg) scale(1.05); }
+  100% { transform: translate(88vw, 30vh) rotate(12deg) scale(0.95); }
+}
+
+/* Cloud animations for day theme - slower and more misty */
 @keyframes cloud-1 {
-  0% { transform: translate(-100vw, 15vh) scale(1); }
-  100% { transform: translate(110vw, 18vh) scale(1.1); }
+  0% { transform: translate(-100vw, 15vh) scale(1); opacity: 0.5; }
+  100% { transform: translate(110vw, 18vh) scale(1.15); opacity: 0.7; }
 }
 
 @keyframes cloud-2 {
-  0% { transform: translate(110vw, 35vh) scale(1.1); }
-  100% { transform: translate(-100vw, 32vh) scale(1); }
+  0% { transform: translate(110vw, 35vh) scale(1.1); opacity: 0.6; }
+  100% { transform: translate(-100vw, 32vh) scale(1); opacity: 0.4; }
 }
 
 @keyframes cloud-3 {
-  0% { transform: translate(-80vw, 55vh) scale(0.9); }
-  100% { transform: translate(110vw, 52vh) scale(1); }
+  0% { transform: translate(-80vw, 55vh) scale(0.9); opacity: 0.4; }
+  100% { transform: translate(110vw, 52vh) scale(1.05); opacity: 0.6; }
 }
 
 @keyframes cloud-4 {
-  0% { transform: translate(110vw, 75vh) scale(1); }
-  100% { transform: translate(-100vw, 78vh) scale(0.95); }
+  0% { transform: translate(110vw, 75vh) scale(1); opacity: 0.35; }
+  100% { transform: translate(-100vw, 78vh) scale(0.95); opacity: 0.55; }
 }
 
 .animate-cloud-1 {
-  animation: cloud-1 60s linear infinite;
+  animation: cloud-1 90s linear infinite;
 }
 
 .animate-cloud-2 {
-  animation: cloud-2 75s linear infinite;
-  animation-delay: -20s;
+  animation: cloud-2 110s linear infinite;
+  animation-delay: -30s;
 }
 
 .animate-cloud-3 {
-  animation: cloud-3 55s linear infinite;
-  animation-delay: -35s;
+  animation: cloud-3 80s linear infinite;
+  animation-delay: -50s;
 }
 
 .animate-cloud-4 {
-  animation: cloud-4 80s linear infinite;
-  animation-delay: -50s;
+  animation: cloud-4 120s linear infinite;
+  animation-delay: -70s;
 }
 
 /* Slow spin for sun rays */

@@ -14,9 +14,10 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>('night');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Check localStorage for saved theme preference
+    setMounted(true);
     const savedTheme = localStorage.getItem('fortune-theme');
     if (savedTheme === 'day' || savedTheme === 'night') {
       setTheme(savedTheme);
@@ -35,7 +36,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme: handleSetTheme, toggleTheme }}>
-      {children}
+      <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 }

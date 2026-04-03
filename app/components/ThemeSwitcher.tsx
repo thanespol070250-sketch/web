@@ -15,10 +15,10 @@ export default function ThemeSwitcher() {
         style={{
           background: theme === 'night'
             ? 'rgba(26, 26, 58, 0.6)'
-            : 'rgba(255, 255, 255, 0.6)',
+            : 'rgba(255, 236, 210, 0.5)',
           border: theme === 'night'
             ? '1px solid rgba(162, 155, 254, 0.3)'
-            : '1px solid rgba(248, 183, 57, 0.3)',
+            : '1px solid rgba(199, 127, 89, 0.3)',
         }}
       >
         <button
@@ -30,11 +30,11 @@ export default function ThemeSwitcher() {
             background: language === 'en'
               ? theme === 'night'
                 ? 'rgba(255, 234, 167, 0.3)'
-                : 'rgba(255, 159, 67, 0.3)'
+                : 'rgba(199, 127, 89, 0.35)'
               : 'transparent',
             color: language === 'en'
-              ? theme === 'night' ? '#ffeaa7' : '#ff9f43'
-              : theme === 'night' ? '#a29bfe' : '#4a5568',
+              ? theme === 'night' ? '#ffeaa7' : '#c17f59'
+              : theme === 'night' ? '#a29bfe' : '#7b4a6b',
           }}
         >
           EN
@@ -48,11 +48,11 @@ export default function ThemeSwitcher() {
             background: language === 'th'
               ? theme === 'night'
                 ? 'rgba(255, 234, 167, 0.3)'
-                : 'rgba(255, 159, 67, 0.3)'
+                : 'rgba(199, 127, 89, 0.35)'
               : 'transparent',
             color: language === 'th'
-              ? theme === 'night' ? '#ffeaa7' : '#ff9f43'
-              : theme === 'night' ? '#a29bfe' : '#4a5568',
+              ? theme === 'night' ? '#ffeaa7' : '#c17f59'
+              : theme === 'night' ? '#a29bfe' : '#7b4a6b',
           }}
         >
           TH
@@ -66,10 +66,10 @@ export default function ThemeSwitcher() {
         style={{
           background: theme === 'night'
             ? 'rgba(26, 26, 58, 0.6)'
-            : 'rgba(255, 255, 255, 0.6)',
+            : 'rgba(255, 236, 210, 0.5)',
           border: theme === 'night'
             ? '1px solid rgba(162, 155, 254, 0.3)'
-            : '1px solid rgba(248, 183, 57, 0.3)',
+            : '1px solid rgba(199, 127, 89, 0.3)',
         }}
       >
         {theme === 'night' ? (
@@ -79,8 +79,8 @@ export default function ThemeSwitcher() {
           </>
         ) : (
           <>
-            <span className="text-lg">☀️</span>
-            <span className="text-sm text-[#f8b739]">{language === 'th' ? 'กลางวัน' : 'Day'}</span>
+            <span className="text-lg">🌅</span>
+            <span className="text-sm text-[#c17f59]">{language === 'th' ? 'ยามเช้า' : 'Dawn'}</span>
           </>
         )}
       </button>

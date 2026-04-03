@@ -225,12 +225,13 @@ export default function FortuneTellerPage() {
       style={{
         background: isNight
           ? 'linear-gradient(to bottom, #0a0a1a, #1a1a3a, #0d0d2a)'
-          : 'linear-gradient(to bottom, #87CEEB, #E0F6FF, #FFF8E7)',
-        color: isNight ? '#ededed' : '#2d3748',
+          : 'linear-gradient(to bottom, #1a1a2e 0%, #2d1b4e 15%, #4a2c5a 30%, #7b4a6b 45%, #c17f59 60%, #daa06d 75%, #f4c67a 90%, #ffecd2 100%)',
+        color: isNight ? '#ededed' : '#4a3f35',
       }}
+      suppressHydrationWarning
     >
       {/* Celestial overlay with sun/moon */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" suppressHydrationWarning>
         {isNight ? (
           <>
             {/* Stars background */}
@@ -244,40 +245,111 @@ export default function FortuneTellerPage() {
           </>
         ) : (
           <>
-            {/* Sun glow */}
-            <div className="absolute top-5 right-5 w-80 h-80 rounded-full bg-gradient-radial from-[#ffd93d]/30 via-[#ffb347]/15 to-transparent blur-3xl"></div>
-            {/* Sun core */}
-            <div className="absolute top-12 right-12 w-28 h-28 rounded-full bg-gradient-to-br from-[#fff5cc] via-[#ffd93d] to-[#ff9f43] shadow-[0_0_100px_rgba(255,217,61,0.8)]">
-              <div className="absolute inset-3 rounded-full bg-gradient-to-br from-[#fffef5] to-[#ffd93d]"></div>
+            {/* Golden Hour Sun - soft and mystical */}
+            <div className="absolute top-5 right-5 w-96 h-96 rounded-full bg-gradient-radial from-[#ffecd2]/40 via-[#daa06d]/20 to-transparent blur-3xl animate-pulse"></div>
+            <div className="absolute top-8 right-8 w-72 h-72 rounded-full bg-gradient-radial from-[#f4c67a]/30 via-[#c17f59]/15 to-transparent blur-2xl"></div>
+            {/* Sun - soft golden orb */}
+            <div className="absolute top-16 right-16 w-32 h-32 rounded-full bg-gradient-to-br from-[#ffecd2] via-[#f4c67a] to-[#daa06d] shadow-[0_0_120px_rgba(244,198,122,0.6),0_0_60px_rgba(199,127,89,0.4)]">
+              <div className="absolute inset-4 rounded-full bg-gradient-to-br from-[#fff8f0] to-[#f4c67a] opacity-90"></div>
+              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-[#fffaf5] to-[#ffecd2]"></div>
             </div>
 
-            {/* Animated Clouds */}
+            {/* Mystical Mist Layers */}
+            <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#ffecd2]/60 via-[#f4c67a]/30 to-transparent blur-xl"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#daa06d]/40 via-[#c17f59]/20 to-transparent blur-2xl"></div>
+            <div className="absolute top-1/3 left-0 right-0 h-32 bg-gradient-to-b from-transparent via-[#7b4a6b]/15 to-[#c17f59]/10 blur-lg"></div>
+
+            {/* Ethereal Misty Clouds */}
             <div className="absolute animate-cloud-1">
               <div className="relative">
-                <div className="w-48 h-16 bg-white/80 rounded-full blur-sm"></div>
-                <div className="absolute -top-4 left-8 w-32 h-12 bg-white/90 rounded-full blur-sm"></div>
-                <div className="absolute -top-2 left-24 w-24 h-10 bg-white/85 rounded-full blur-sm"></div>
+                <div className="w-48 h-16 bg-gradient-to-r from-[#ffecd2]/70 via-[#f4c67a]/60 to-[#daa06d]/50 rounded-full blur-md"></div>
+                <div className="absolute -top-4 left-8 w-32 h-12 bg-gradient-to-r from-[#ffecd2]/80 to-[#f4c67a]/70 rounded-full blur-sm"></div>
+                <div className="absolute -top-2 left-24 w-24 h-10 bg-gradient-to-r from-[#f4c67a]/60 to-[#c17f59]/50 rounded-full blur-sm"></div>
               </div>
             </div>
             <div className="absolute animate-cloud-2">
               <div className="relative">
-                <div className="w-56 h-14 bg-white/75 rounded-full blur-sm"></div>
-                <div className="absolute -top-3 left-12 w-28 h-10 bg-white/80 rounded-full blur-sm"></div>
-                <div className="absolute -top-1 left-32 w-20 h-8 bg-white/70 rounded-full blur-sm"></div>
+                <div className="w-56 h-14 bg-gradient-to-r from-[#daa06d]/60 via-[#f4c67a]/70 to-[#ffecd2]/60 rounded-full blur-md"></div>
+                <div className="absolute -top-3 left-12 w-28 h-10 bg-gradient-to-r from-[#c17f59]/50 to-[#f4c67a]/60 rounded-full blur-sm"></div>
+                <div className="absolute -top-1 left-32 w-20 h-8 bg-gradient-to-r from-[#f4c67a]/50 to-[#ffecd2]/40 rounded-full blur-sm"></div>
               </div>
             </div>
             <div className="absolute animate-cloud-3">
               <div className="relative">
-                <div className="w-40 h-12 bg-white/70 rounded-full blur-sm"></div>
-                <div className="absolute -top-2 left-6 w-24 h-8 bg-white/75 rounded-full blur-sm"></div>
-                <div className="absolute top-0 left-20 w-16 h-6 bg-white/65 rounded-full blur-sm"></div>
+                <div className="w-40 h-12 bg-gradient-to-r from-[#7b4a6b]/40 via-[#c17f59]/50 to-[#f4c67a]/40 rounded-full blur-lg"></div>
+                <div className="absolute -top-2 left-6 w-24 h-8 bg-gradient-to-r from-[#7b4a6b]/30 to-[#c17f59]/40 rounded-full blur-md"></div>
+                <div className="absolute top-0 left-20 w-16 h-6 bg-gradient-to-r from-[#c17f59]/30 to-[#daa06d]/30 rounded-full blur-sm"></div>
               </div>
             </div>
             <div className="absolute animate-cloud-4">
               <div className="relative">
-                <div className="w-44 h-10 bg-white/60 rounded-full blur-sm"></div>
-                <div className="absolute -top-2 left-10 w-20 h-7 bg-white/65 rounded-full blur-sm"></div>
+                <div className="w-44 h-10 bg-gradient-to-r from-[#4a2c5a]/30 via-[#7b4a6b]/40 to-[#c17f59]/30 rounded-full blur-lg"></div>
+                <div className="absolute -top-2 left-10 w-20 h-7 bg-gradient-to-r from-[#4a2c5a]/25 to-[#7b4a6b]/35 rounded-full blur-md"></div>
               </div>
+            </div>
+
+            {/* Floating Light Particles - magical dust */}
+            <div className="absolute w-3 h-3 rounded-full top-[10%] left-[15%] animate-float" style={{ background: 'rgba(244, 198, 122, 0.5)', boxShadow: '0 0 10px rgba(244, 198, 122, 0.3)' }}></div>
+            <div className="absolute w-2 h-2 rounded-full top-[20%] right-[25%] animate-float-slow" style={{ background: 'rgba(255, 236, 210, 0.6)', boxShadow: '0 0 8px rgba(255, 236, 210, 0.4)' }}></div>
+            <div className="absolute w-4 h-4 rounded-full top-[35%] left-[8%] animate-float" style={{ background: 'rgba(199, 127, 89, 0.4)', boxShadow: '0 0 12px rgba(199, 127, 89, 0.3)' }}></div>
+            <div className="absolute w-2 h-2 rounded-full bottom-[40%] right-[10%] animate-float-slow" style={{ background: 'rgba(218, 160, 106, 0.5)', boxShadow: '0 0 6px rgba(218, 160, 106, 0.3)' }}></div>
+            <div className="absolute w-3 h-3 rounded-full bottom-[25%] left-[30%] animate-float" style={{ background: 'rgba(244, 198, 122, 0.45)', boxShadow: '0 0 10px rgba(244, 198, 122, 0.3)' }}></div>
+
+            {/* Floating Aladdin - Magical flying characters */}
+            <div style={{ animation: 'aladdin-1 28s ease-in-out infinite' }}>
+              <img
+                src="/alardin.png"
+                alt="Aladdin"
+                className="w-24 h-24 md:w-32 md:h-32 object-contain transition-all duration-700 hover:scale-110"
+                style={{
+                  opacity: 0.9,
+                  filter: 'drop-shadow(0 0 15px rgba(244, 198, 122, 0.4))',
+                }}
+              />
+            </div>
+            <div style={{ animation: 'aladdin-2 35s ease-in-out infinite', animationDelay: '-7s' }}>
+              <img
+                src="/alardin.png"
+                alt="Aladdin"
+                className="w-20 h-20 md:w-28 md:h-28 object-contain transition-all duration-700 hover:scale-110"
+                style={{
+                  opacity: 0.85,
+                  filter: 'drop-shadow(0 0 12px rgba(218, 160, 106, 0.35))',
+                }}
+              />
+            </div>
+            <div style={{ animation: 'aladdin-3 32s ease-in-out infinite', animationDelay: '-15s' }}>
+              <img
+                src="/alardin.png"
+                alt="Aladdin"
+                className="w-28 h-28 md:w-36 md:h-36 object-contain transition-all duration-700 hover:scale-110"
+                style={{
+                  opacity: 0.8,
+                  filter: 'drop-shadow(0 0 18px rgba(199, 127, 89, 0.3))',
+                }}
+              />
+            </div>
+            <div style={{ animation: 'aladdin-4 40s ease-in-out infinite', animationDelay: '-20s' }}>
+              <img
+                src="/alardin.png"
+                alt="Aladdin"
+                className="w-16 h-16 md:w-24 md:h-24 object-contain transition-all duration-700 hover:scale-110"
+                style={{
+                  opacity: 0.75,
+                  filter: 'drop-shadow(0 0 10px rgba(255, 236, 210, 0.3))',
+                }}
+              />
+            </div>
+            <div style={{ animation: 'aladdin-5 25s ease-in-out infinite', animationDelay: '-3s' }}>
+              <img
+                src="/alardin.png"
+                alt="Aladdin"
+                className="w-20 h-20 md:w-28 md:h-28 object-contain transition-all duration-700 hover:scale-110"
+                style={{
+                  opacity: 0.7,
+                  filter: 'drop-shadow(0 0 14px rgba(244, 198, 122, 0.25))',
+                }}
+              />
             </div>
           </>
         )}
@@ -356,20 +428,26 @@ export default function FortuneTellerPage() {
         <div className="absolute inset-0">
           <div
             className="absolute w-2 h-2 rounded-full top-[15%] left-[10%] animate-float"
+            suppressHydrationWarning
             style={{
-              background: isNight ? 'rgba(255, 234, 167, 0.3)' : 'rgba(255, 217, 61, 0.4)',
+              background: isNight ? 'rgba(255, 234, 167, 0.3)' : 'rgba(244, 198, 122, 0.5)',
+              boxShadow: isNight ? 'none' : '0 0 8px rgba(244, 198, 122, 0.4)',
             }}
           ></div>
           <div
             className="absolute w-3 h-3 rounded-full top-[25%] right-[20%] animate-float-slow"
+            suppressHydrationWarning
             style={{
-              background: isNight ? 'rgba(162, 155, 254, 0.2)' : 'rgba(135, 206, 235, 0.4)',
+              background: isNight ? 'rgba(162, 155, 254, 0.2)' : 'rgba(255, 236, 210, 0.5)',
+              boxShadow: isNight ? 'none' : '0 0 10px rgba(255, 236, 210, 0.3)',
             }}
           ></div>
           <div
             className="absolute w-2 h-2 rounded-full bottom-[30%] left-[25%] animate-float"
+            suppressHydrationWarning
             style={{
-              background: isNight ? 'rgba(253, 121, 168, 0.25)' : 'rgba(255, 159, 67, 0.3)',
+              background: isNight ? 'rgba(253, 121, 168, 0.25)' : 'rgba(199, 127, 89, 0.4)',
+              boxShadow: isNight ? 'none' : '0 0 6px rgba(199, 127, 89, 0.3)',
             }}
           ></div>
         </div>
@@ -380,7 +458,7 @@ export default function FortuneTellerPage() {
         <header className="text-center mb-12 relative z-10">
           <div className="flex justify-between items-center mb-4">
             <ThemeSwitcher />
-            <div className="text-sm" style={{ color: isNight ? '#ffeaa7' : '#c05621' }}>
+            <div className="text-sm" style={{ color: isNight ? '#ffeaa7' : '#7b4a6b' }}>
               Step {step} of 3
             </div>
           </div>
@@ -389,14 +467,14 @@ export default function FortuneTellerPage() {
             style={{
               backgroundImage: isNight
                 ? 'linear-gradient(to right, #ffeaa7, #f8b739, #ffeaa7)'
-                : 'linear-gradient(to right, #ff9f43, #ffd93d, #ff9f43)',
+                : 'linear-gradient(to right, #f4c67a, #daa06d, #c17f59, #f4c67a)',
             }}
           >
             {t('title')}
           </h1>
           <p
             className="text-lg italic transition-all duration-500"
-            style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+            style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
           >
             {t('subtitle')}
           </p>
@@ -407,19 +485,19 @@ export default function FortuneTellerPage() {
           <section
             className="backdrop-blur-md rounded-xl p-8 shadow-2xl transition-all duration-500"
             style={{
-              background: isNight ? 'rgba(26, 26, 58, 0.4)' : 'rgba(255, 255, 255, 0.7)',
-              border: isNight ? '1px solid rgba(255, 234, 167, 0.2)' : '1px solid rgba(255, 159, 67, 0.3)',
+              background: isNight ? 'rgba(26, 26, 58, 0.4)' : 'rgba(255, 236, 210, 0.5)',
+              border: isNight ? '1px solid rgba(255, 234, 167, 0.2)' : '1px solid rgba(199, 127, 89, 0.3)',
             }}
           >
             <h2
               className="text-2xl font-semibold mb-2 text-center transition-all duration-500"
-              style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
+              style={{ color: isNight ? '#ffeaa7' : '#4a2c5a' }}
             >
               {t('step1Title')}
             </h2>
             <p
               className="text-center mb-6 transition-all duration-500"
-              style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+              style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
             >
               {t('step1Subtitle')}
             </p>
@@ -428,7 +506,7 @@ export default function FortuneTellerPage() {
                 <label
                   htmlFor="name"
                   className="block mb-2 transition-all duration-500"
-                  style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                  style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                 >
                   {t('nameLabel')}
                 </label>
@@ -439,9 +517,9 @@ export default function FortuneTellerPage() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg backdrop-blur-sm focus:outline-none transition-all duration-300"
                   style={{
-                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 255, 255, 0.8)',
-                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                    color: isNight ? '#ffffff' : '#2d3748',
+                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.6)',
+                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                    color: isNight ? '#ffffff' : '#4a3f35',
                   }}
                   placeholder={t('namePlaceholder')}
                   required
@@ -451,7 +529,7 @@ export default function FortuneTellerPage() {
                 <label
                   htmlFor="dob"
                   className="block mb-2 transition-all duration-500"
-                  style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                  style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                 >
                   {t('dobLabel')}
                 </label>
@@ -462,9 +540,9 @@ export default function FortuneTellerPage() {
                   onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg backdrop-blur-sm focus:outline-none transition-all duration-300"
                   style={{
-                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 255, 255, 0.8)',
-                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                    color: isNight ? '#ffffff' : '#2d3748',
+                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.6)',
+                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                    color: isNight ? '#ffffff' : '#4a3f35',
                   }}
                   required
                 />
@@ -478,9 +556,9 @@ export default function FortuneTellerPage() {
                 style={{
                   background: isNight
                     ? 'linear-gradient(to right, #ffeaa7, #f8b739)'
-                    : 'linear-gradient(to right, #ff9f43, #ffd93d)',
-                  color: isNight ? '#0a0a1a' : '#ffffff',
-                  boxShadow: isNight ? '0 10px 40px rgba(255, 234, 167, 0.2)' : '0 10px 40px rgba(255, 159, 67, 0.3)',
+                    : 'linear-gradient(to right, #f4c67a, #c17f59)',
+                  color: isNight ? '#0a0a1a' : '#ffecd2',
+                  boxShadow: isNight ? '0 10px 40px rgba(255, 234, 167, 0.2)' : '0 10px 40px rgba(199, 127, 89, 0.3)',
                 }}
               >
                 {t('continueBtn')}
@@ -494,19 +572,19 @@ export default function FortuneTellerPage() {
           <section
             className="backdrop-blur-md rounded-xl p-8 shadow-2xl transition-all duration-500"
             style={{
-              background: isNight ? 'rgba(26, 26, 58, 0.4)' : 'rgba(255, 255, 255, 0.7)',
-              border: isNight ? '1px solid rgba(255, 234, 167, 0.2)' : '1px solid rgba(255, 159, 67, 0.3)',
+              background: isNight ? 'rgba(26, 26, 58, 0.4)' : 'rgba(255, 236, 210, 0.5)',
+              border: isNight ? '1px solid rgba(255, 234, 167, 0.2)' : '1px solid rgba(199, 127, 89, 0.3)',
             }}
           >
             <h2
               className="text-2xl font-semibold mb-2 text-center transition-all duration-500"
-              style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
+              style={{ color: isNight ? '#ffeaa7' : '#4a2c5a' }}
             >
               {t('step2Title')}
             </h2>
             <p
               className="text-center mb-6 transition-all duration-500"
-              style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+              style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
             >
               {t('step2Greeting')}, <span style={{ fontWeight: 600 }}>{formData.name}</span>! {t('step2Subtitle')}
             </p>
@@ -516,7 +594,7 @@ export default function FortuneTellerPage() {
               <div className="space-y-4">
                 <p
                   className="text-center mb-6 transition-all duration-500"
-                  style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                  style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                 >
                   {t('modeSelectionLabel')}
                 </p>
@@ -528,20 +606,20 @@ export default function FortuneTellerPage() {
                     onClick={() => handleModeSelect('topic')}
                     className="group p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105"
                     style={{
-                      background: isNight ? 'rgba(255, 234, 167, 0.2)' : 'rgba(255, 217, 61, 0.3)',
-                      border: isNight ? '1px solid rgba(255, 234, 167, 0.4)' : '1px solid rgba(255, 159, 67, 0.4)',
+                      background: isNight ? 'rgba(255, 234, 167, 0.2)' : 'rgba(244, 198, 122, 0.4)',
+                      border: isNight ? '1px solid rgba(255, 234, 167, 0.4)' : '1px solid rgba(199, 127, 89, 0.4)',
                     }}
                   >
                     <div className="text-4xl mb-4">🔮</div>
                     <h3
                       className="text-xl font-semibold mb-2 transition-all duration-300"
-                      style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
+                      style={{ color: isNight ? '#ffeaa7' : '#4a2c5a' }}
                     >
                       {t('modeTopicTitle')}
                     </h3>
                     <p
                       className="text-sm transition-all duration-300"
-                      style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                      style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                     >
                       {t('modeTopicDesc')}
                     </p>
@@ -552,20 +630,20 @@ export default function FortuneTellerPage() {
                     onClick={() => handleModeSelect('question')}
                     className="group p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105"
                     style={{
-                      background: isNight ? 'rgba(162, 155, 254, 0.2)' : 'rgba(135, 206, 235, 0.4)',
-                      border: isNight ? '1px solid rgba(162, 155, 254, 0.4)' : '1px solid rgba(70, 130, 180, 0.4)',
+                      background: isNight ? 'rgba(162, 155, 254, 0.2)' : 'rgba(123, 74, 107, 0.4)',
+                      border: isNight ? '1px solid rgba(162, 155, 254, 0.4)' : '1px solid rgba(74, 44, 90, 0.4)',
                     }}
                   >
                     <div className="text-4xl mb-4">💬</div>
                     <h3
                       className="text-xl font-semibold mb-2 transition-all duration-300"
-                      style={{ color: isNight ? '#a29bfe' : '#3182ce' }}
+                      style={{ color: isNight ? '#a29bfe' : '#4a2c5a' }}
                     >
                       {t('modeQuestionTitle')}
                     </h3>
                     <p
                       className="text-sm transition-all duration-300"
-                      style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                      style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                     >
                       {t('modeQuestionDesc')}
                     </p>
@@ -576,20 +654,20 @@ export default function FortuneTellerPage() {
                     onClick={() => handleModeSelect('prophecy')}
                     className="group p-6 rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105"
                     style={{
-                      background: isNight ? 'rgba(253, 121, 168, 0.2)' : 'rgba(255, 182, 193, 0.4)',
-                      border: isNight ? '1px solid rgba(253, 121, 168, 0.4)' : '1px solid rgba(255, 105, 180, 0.4)',
+                      background: isNight ? 'rgba(253, 121, 168, 0.2)' : 'rgba(199, 127, 89, 0.35)',
+                      border: isNight ? '1px solid rgba(253, 121, 168, 0.4)' : '1px solid rgba(193, 127, 89, 0.4)',
                     }}
                   >
                     <div className="text-4xl mb-4">📜</div>
                     <h3
                       className="text-xl font-semibold mb-2 transition-all duration-300"
-                      style={{ color: isNight ? '#fd79a8' : '#d53f8c' }}
+                      style={{ color: isNight ? '#fd79a8' : '#c17f59' }}
                     >
                       {t('prophecyLifeTitle')}
                     </h3>
                     <p
                       className="text-sm transition-all duration-300"
-                      style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                      style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                     >
                       {t('prophecyLifeDesc')}
                     </p>
@@ -604,7 +682,7 @@ export default function FortuneTellerPage() {
                 {/* Topic Label */}
                 <p
                   className="text-center mb-4 transition-all duration-500"
-                  style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                  style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                 >
                   {t('step2TopicLabel')}
                 </p>
@@ -618,16 +696,16 @@ export default function FortuneTellerPage() {
                       selectedTopic === 'love' ? 'ring-2 ring-pink-400 ring-offset-2' : ''
                     }`}
                     style={{
-                      background: isNight ? 'rgba(232, 67, 147, 0.2)' : 'rgba(255, 182, 193, 0.4)',
+                      background: isNight ? 'rgba(232, 67, 147, 0.2)' : 'rgba(199, 127, 89, 0.4)',
                       border: selectedTopic === 'love'
-                        ? `2px solid ${isNight ? '#fd79a8' : '#d53f8c'}`
-                        : isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(255, 105, 180, 0.4)',
+                        ? `2px solid ${isNight ? '#fd79a8' : '#c17f59'}`
+                        : isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(193, 127, 89, 0.4)',
                     }}
                   >
                     <div className="text-3xl mb-2">💕</div>
                     <h3
                       className="text-sm font-semibold transition-all duration-300"
-                      style={{ color: isNight ? '#fd79a8' : '#d53f8c' }}
+                      style={{ color: isNight ? '#fd79a8' : '#c17f59' }}
                     >
                       {t('loveTitle')}
                     </h3>
@@ -640,16 +718,16 @@ export default function FortuneTellerPage() {
                       selectedTopic === 'studies' ? 'ring-2 ring-blue-400 ring-offset-2' : ''
                     }`}
                     style={{
-                      background: isNight ? 'rgba(162, 155, 254, 0.2)' : 'rgba(135, 206, 235, 0.4)',
+                      background: isNight ? 'rgba(162, 155, 254, 0.2)' : 'rgba(123, 74, 107, 0.35)',
                       border: selectedTopic === 'studies'
-                        ? `2px solid ${isNight ? '#a29bfe' : '#3182ce'}`
-                        : isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(70, 130, 180, 0.4)',
+                        ? `2px solid ${isNight ? '#a29bfe' : '#4a2c5a'}`
+                        : isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(74, 44, 90, 0.4)',
                     }}
                   >
                     <div className="text-3xl mb-2">📚</div>
                     <h3
                       className="text-sm font-semibold transition-all duration-300"
-                      style={{ color: isNight ? '#a29bfe' : '#3182ce' }}
+                      style={{ color: isNight ? '#a29bfe' : '#4a2c5a' }}
                     >
                       {t('studiesTitle')}
                     </h3>
@@ -662,16 +740,16 @@ export default function FortuneTellerPage() {
                       selectedTopic === 'personality' ? 'ring-2 ring-yellow-400 ring-offset-2' : ''
                     }`}
                     style={{
-                      background: isNight ? 'rgba(255, 234, 167, 0.2)' : 'rgba(255, 217, 61, 0.3)',
+                      background: isNight ? 'rgba(255, 234, 167, 0.2)' : 'rgba(244, 198, 122, 0.45)',
                       border: selectedTopic === 'personality'
-                        ? `2px solid ${isNight ? '#ffeaa7' : '#c05621'}`
-                        : isNight ? '1px solid rgba(255, 234, 167, 0.3)' : '1px solid rgba(255, 159, 67, 0.4)',
+                        ? `2px solid ${isNight ? '#ffeaa7' : '#daa06d'}`
+                        : isNight ? '1px solid rgba(255, 234, 167, 0.3)' : '1px solid rgba(218, 160, 106, 0.4)',
                     }}
                   >
                     <div className="text-3xl mb-2">🌟</div>
                     <h3
                       className="text-sm font-semibold transition-all duration-300"
-                      style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
+                      style={{ color: isNight ? '#ffeaa7' : '#daa06d' }}
                     >
                       {t('personalityTitle')}
                     </h3>
@@ -684,16 +762,16 @@ export default function FortuneTellerPage() {
                       selectedTopic === 'health' ? 'ring-2 ring-green-400 ring-offset-2' : ''
                     }`}
                     style={{
-                      background: isNight ? 'rgba(46, 204, 113, 0.2)' : 'rgba(144, 238, 144, 0.4)',
+                      background: isNight ? 'rgba(46, 204, 113, 0.2)' : 'rgba(123, 74, 107, 0.3)',
                       border: selectedTopic === 'health'
-                        ? `2px solid ${isNight ? '#2ecc71' : '#27ae60'}`
-                        : isNight ? '1px solid rgba(46, 204, 113, 0.3)' : '1px solid rgba(46, 139, 87, 0.4)',
+                        ? `2px solid ${isNight ? '#2ecc71' : '#7b4a6b'}`
+                        : isNight ? '1px solid rgba(46, 204, 113, 0.3)' : '1px solid rgba(74, 44, 90, 0.35)',
                     }}
                   >
                     <div className="text-3xl mb-2">🌿</div>
                     <h3
                       className="text-sm font-semibold transition-all duration-300"
-                      style={{ color: isNight ? '#2ecc71' : '#27ae60' }}
+                      style={{ color: isNight ? '#2ecc71' : '#7b4a6b' }}
                     >
                       {t('healthTitle')}
                     </h3>
@@ -706,16 +784,16 @@ export default function FortuneTellerPage() {
                       selectedTopic === 'finance' ? 'ring-2 ring-amber-400 ring-offset-2' : ''
                     }`}
                     style={{
-                      background: isNight ? 'rgba(255, 215, 0, 0.2)' : 'rgba(255, 215, 0, 0.3)',
+                      background: isNight ? 'rgba(255, 215, 0, 0.2)' : 'rgba(244, 198, 122, 0.4)',
                       border: selectedTopic === 'finance'
-                        ? `2px solid ${isNight ? '#ffd700' : '#b8860b'}`
-                        : isNight ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid rgba(184, 134, 11, 0.4)',
+                        ? `2px solid ${isNight ? '#ffd700' : '#f4c67a'}`
+                        : isNight ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid rgba(244, 198, 122, 0.4)',
                     }}
                   >
                     <div className="text-3xl mb-2">💰</div>
                     <h3
                       className="text-sm font-semibold transition-all duration-300"
-                      style={{ color: isNight ? '#ffd700' : '#b8860b' }}
+                      style={{ color: isNight ? '#ffd700' : '#f4c67a' }}
                     >
                       {t('financeTitle')}
                     </h3>
@@ -728,7 +806,7 @@ export default function FortuneTellerPage() {
                     <label
                       htmlFor="question"
                       className="block mb-2 transition-all duration-500"
-                      style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                      style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                     >
                       {t('questionLabel')}
                     </label>
@@ -738,9 +816,9 @@ export default function FortuneTellerPage() {
                       onChange={(e) => setQuestion(e.target.value)}
                       className="w-full px-4 py-3 rounded-lg backdrop-blur-sm focus:outline-none resize-none transition-all duration-300"
                       style={{
-                        background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 255, 255, 0.8)',
-                        border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                        color: isNight ? '#ffffff' : '#2d3748',
+                        background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.6)',
+                        border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                        color: isNight ? '#ffffff' : '#4a3f35',
                       }}
                       placeholder={t('questionPlaceholder')}
                       rows={3}
@@ -748,7 +826,7 @@ export default function FortuneTellerPage() {
                     />
                     <p
                       className="text-xs mt-1 transition-all duration-500"
-                      style={{ color: isNight ? 'rgba(162, 155, 254, 0.5)' : 'rgba(74, 85, 104, 0.5)' }}
+                      style={{ color: isNight ? 'rgba(162, 155, 254, 0.5)' : 'rgba(123, 74, 107, 0.5)' }}
                     >
                       {t('questionHint')}
                     </p>
@@ -764,9 +842,9 @@ export default function FortuneTellerPage() {
                     style={{
                       background: isNight
                         ? 'linear-gradient(to right, #ffeaa7, #f8b739)'
-                        : 'linear-gradient(to right, #ff9f43, #ffd93d)',
-                      color: isNight ? '#0a0a1a' : '#ffffff',
-                      boxShadow: isNight ? '0 10px 40px rgba(255, 234, 167, 0.2)' : '0 10px 40px rgba(255, 159, 67, 0.3)',
+                        : 'linear-gradient(to right, #f4c67a, #c17f59)',
+                      color: isNight ? '#0a0a1a' : '#ffecd2',
+                      boxShadow: isNight ? '0 10px 40px rgba(255, 234, 167, 0.2)' : '0 10px 40px rgba(199, 127, 89, 0.3)',
                     }}
                   >
                     {t('submitBtn')}
@@ -777,8 +855,8 @@ export default function FortuneTellerPage() {
                   onClick={() => setPredictionMode(null)}
                   className="mt-4 w-full py-3 rounded-lg transition-all duration-300"
                   style={{
-                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                    color: isNight ? '#a29bfe' : '#4a5568',
+                    border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                    color: isNight ? '#a29bfe' : '#7b4a6b',
                     background: 'transparent',
                   }}
                 >
@@ -794,7 +872,7 @@ export default function FortuneTellerPage() {
                   <form onSubmit={handleDirectQuestionSubmit} className="space-y-4">
                     <p
                       className="text-center mb-4 transition-all duration-500"
-                      style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                      style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                     >
                       {t('directQuestionLabel')}
                     </p>
@@ -802,7 +880,7 @@ export default function FortuneTellerPage() {
                       <label
                         htmlFor="directQuestion"
                         className="block mb-2 transition-all duration-500"
-                        style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                        style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                       >
                         {t('yourQuestionLabel')}
                       </label>
@@ -812,9 +890,9 @@ export default function FortuneTellerPage() {
                         onChange={(e) => setQuestion(e.target.value)}
                         className="w-full px-4 py-3 rounded-lg backdrop-blur-sm focus:outline-none resize-none transition-all duration-300"
                         style={{
-                          background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 255, 255, 0.8)',
-                          border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                          color: isNight ? '#ffffff' : '#2d3748',
+                          background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.6)',
+                          border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                          color: isNight ? '#ffffff' : '#4a3f35',
                         }}
                         placeholder={t('directQuestionPlaceholder')}
                         rows={4}
@@ -832,9 +910,9 @@ export default function FortuneTellerPage() {
                       style={{
                         background: isNight
                           ? 'linear-gradient(to right, #a29bfe, #6c5ce7)'
-                          : 'linear-gradient(to right, #3182ce, #2b6cb0)',
-                        color: '#ffffff',
-                        boxShadow: isNight ? '0 10px 40px rgba(162, 155, 254, 0.2)' : '0 10px 40px rgba(49, 130, 206, 0.3)',
+                          : 'linear-gradient(to right, #7b4a6b, #4a2c5a)',
+                        color: '#ffecd2',
+                        boxShadow: isNight ? '0 10px 40px rgba(162, 155, 254, 0.2)' : '0 10px 40px rgba(74, 44, 90, 0.3)',
                       }}
                     >
                       {t('askOracleBtn')}
@@ -848,8 +926,8 @@ export default function FortuneTellerPage() {
                       }}
                       className="mt-4 w-full py-3 rounded-lg transition-all duration-300"
                       style={{
-                        border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                        color: isNight ? '#a29bfe' : '#4a5568',
+                        border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                        color: isNight ? '#a29bfe' : '#7b4a6b',
                         background: 'transparent',
                       }}
                     >
@@ -862,11 +940,11 @@ export default function FortuneTellerPage() {
                   <div className="text-center">
                     <div
                       className="inline-flex items-center gap-3"
-                      style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                      style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                     >
                       <div
                         className="animate-spin w-6 h-6 border-2 border-t-transparent rounded-full"
-                        style={{ borderColor: isNight ? '#a29bfe' : '#3182ce', borderTopColor: 'transparent' }}
+                        style={{ borderColor: isNight ? '#a29bfe' : '#7b4a6b', borderTopColor: 'transparent' }}
                       ></div>
                       {t('consulting')}
                     </div>
@@ -879,25 +957,25 @@ export default function FortuneTellerPage() {
                     <div
                       className="p-6 rounded-xl backdrop-blur-sm transition-all duration-500"
                       style={{
-                        background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 248, 231, 0.8)',
-                        border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(49, 130, 206, 0.3)',
+                        background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.7)',
+                        border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.3)',
                       }}
                     >
                       <h3
                         className="text-xl font-semibold text-center mb-4 transition-all duration-500"
-                        style={{ color: isNight ? '#a29bfe' : '#3182ce' }}
+                        style={{ color: isNight ? '#a29bfe' : '#4a2c5a' }}
                       >
                         {t('oracleAnswerTitle')}
                       </h3>
                       <p
                         className="text-sm mb-4 text-center"
-                        style={{ color: isNight ? 'rgba(162, 155, 254, 0.6)' : 'rgba(74, 85, 104, 0.6)' }}
+                        style={{ color: isNight ? 'rgba(162, 155, 254, 0.6)' : 'rgba(123, 74, 107, 0.6)' }}
                       >
                         {t('yourQuestionWas')}: "{question}"
                       </p>
                       <div
                         className="leading-relaxed whitespace-pre-line transition-all duration-500"
-                        style={{ color: isNight ? '#ffffff' : '#2d3748' }}
+                        style={{ color: isNight ? '#ffffff' : '#4a3f35' }}
                       >
                         {fortune}
                       </div>
@@ -912,8 +990,8 @@ export default function FortuneTellerPage() {
                         }}
                         className="px-6 py-3 rounded-lg transition-all duration-300"
                         style={{
-                          border: isNight ? '1px solid rgba(162, 155, 254, 0.5)' : '1px solid rgba(49, 130, 206, 0.5)',
-                          color: isNight ? '#a29bfe' : '#3182ce',
+                          border: isNight ? '1px solid rgba(162, 155, 254, 0.5)' : '1px solid rgba(199, 127, 89, 0.5)',
+                          color: isNight ? '#a29bfe' : '#4a2c5a',
                           background: 'transparent',
                         }}
                       >
@@ -925,8 +1003,8 @@ export default function FortuneTellerPage() {
                         style={{
                           background: isNight
                             ? 'linear-gradient(to right, #a29bfe, #6c5ce7)'
-                            : 'linear-gradient(to right, #3182ce, #2b6cb0)',
-                          color: '#ffffff',
+                            : 'linear-gradient(to right, #7b4a6b, #4a2c5a)',
+                          color: '#ffecd2',
                         }}
                       >
                         {t('startNewBtn')}
@@ -944,7 +1022,7 @@ export default function FortuneTellerPage() {
                   <form onSubmit={handleProphecySubmit} className="space-y-4">
                     <p
                       className="text-center mb-4 transition-all duration-500"
-                      style={{ color: isNight ? '#fd79a8' : '#d53f8c' }}
+                      style={{ color: isNight ? '#fd79a8' : '#c17f59' }}
                     >
                       {t('prophecyLifeDesc')}
                     </p>
@@ -952,7 +1030,7 @@ export default function FortuneTellerPage() {
                       <label
                         htmlFor="prophecyQuestion"
                         className="block mb-2 transition-all duration-500"
-                        style={{ color: isNight ? '#fd79a8' : '#d53f8c' }}
+                        style={{ color: isNight ? '#fd79a8' : '#c17f59' }}
                       >
                         {t('yourQuestionLabel')}
                       </label>
@@ -962,9 +1040,9 @@ export default function FortuneTellerPage() {
                         onChange={(e) => setQuestion(e.target.value)}
                         className="w-full px-4 py-3 rounded-lg backdrop-blur-sm focus:outline-none resize-none transition-all duration-300"
                         style={{
-                          background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 255, 255, 0.8)',
-                          border: isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(213, 63, 140, 0.3)',
-                          color: isNight ? '#ffffff' : '#2d3748',
+                          background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.6)',
+                          border: isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(193, 127, 89, 0.4)',
+                          color: isNight ? '#ffffff' : '#4a3f35',
                         }}
                         placeholder={t('prophecyLifePlaceholder')}
                         rows={4}
@@ -982,9 +1060,9 @@ export default function FortuneTellerPage() {
                       style={{
                         background: isNight
                           ? 'linear-gradient(to right, #fd79a8, #e84393)'
-                          : 'linear-gradient(to right, #d53f8c, #c53030)',
-                        color: '#ffffff',
-                        boxShadow: isNight ? '0 10px 40px rgba(253, 121, 168, 0.2)' : '0 10px 40px rgba(213, 63, 140, 0.3)',
+                          : 'linear-gradient(to right, #c17f59, #daa06d)',
+                        color: '#ffecd2',
+                        boxShadow: isNight ? '0 10px 40px rgba(253, 121, 168, 0.2)' : '0 10px 40px rgba(199, 127, 89, 0.3)',
                       }}
                     >
                       {t('prophecyLifeBtn')}
@@ -998,8 +1076,8 @@ export default function FortuneTellerPage() {
                       }}
                       className="mt-4 w-full py-3 rounded-lg transition-all duration-300"
                       style={{
-                        border: isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                        color: isNight ? '#fd79a8' : '#4a5568',
+                        border: isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                        color: isNight ? '#fd79a8' : '#c17f59',
                         background: 'transparent',
                       }}
                     >
@@ -1012,11 +1090,11 @@ export default function FortuneTellerPage() {
                   <div className="text-center">
                     <div
                       className="inline-flex items-center gap-3"
-                      style={{ color: isNight ? '#fd79a8' : '#d53f8c' }}
+                      style={{ color: isNight ? '#fd79a8' : '#c17f59' }}
                     >
                       <div
                         className="animate-spin w-6 h-6 border-2 border-t-transparent rounded-full"
-                        style={{ borderColor: isNight ? '#fd79a8' : '#d53f8c', borderTopColor: 'transparent' }}
+                        style={{ borderColor: isNight ? '#fd79a8' : '#c17f59', borderTopColor: 'transparent' }}
                       ></div>
                       {t('consulting')}
                     </div>
@@ -1029,25 +1107,25 @@ export default function FortuneTellerPage() {
                     <div
                       className="p-6 rounded-xl backdrop-blur-sm transition-all duration-500"
                       style={{
-                        background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 248, 231, 0.8)',
-                        border: isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(213, 63, 140, 0.3)',
+                        background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.7)',
+                        border: isNight ? '1px solid rgba(253, 121, 168, 0.3)' : '1px solid rgba(193, 127, 89, 0.4)',
                       }}
                     >
                       <h3
                         className="text-xl font-semibold text-center mb-4 transition-all duration-500"
-                        style={{ color: isNight ? '#fd79a8' : '#d53f8c' }}
+                        style={{ color: isNight ? '#fd79a8' : '#c17f59' }}
                       >
                         Your Sacred Prophecy
                       </h3>
                       <p
                         className="text-sm mb-4 text-center"
-                        style={{ color: isNight ? 'rgba(253, 121, 168, 0.6)' : 'rgba(74, 85, 104, 0.6)' }}
+                        style={{ color: isNight ? 'rgba(253, 121, 168, 0.6)' : 'rgba(193, 127, 89, 0.6)' }}
                       >
                         {t('yourQuestionWas')}: "{question}"
                       </p>
                       <div
                         className="leading-relaxed whitespace-pre-line transition-all duration-500"
-                        style={{ color: isNight ? '#ffffff' : '#2d3748' }}
+                        style={{ color: isNight ? '#ffffff' : '#4a3f35' }}
                       >
                         {fortune}
                       </div>
@@ -1062,8 +1140,8 @@ export default function FortuneTellerPage() {
                         }}
                         className="px-6 py-3 rounded-lg transition-all duration-300"
                         style={{
-                          border: isNight ? '1px solid rgba(253, 121, 168, 0.5)' : '1px solid rgba(213, 63, 140, 0.5)',
-                          color: isNight ? '#fd79a8' : '#d53f8c',
+                          border: isNight ? '1px solid rgba(253, 121, 168, 0.5)' : '1px solid rgba(193, 127, 89, 0.5)',
+                          color: isNight ? '#fd79a8' : '#c17f59',
                           background: 'transparent',
                         }}
                       >
@@ -1075,8 +1153,8 @@ export default function FortuneTellerPage() {
                         style={{
                           background: isNight
                             ? 'linear-gradient(to right, #fd79a8, #e84393)'
-                            : 'linear-gradient(to right, #d53f8c, #c53030)',
-                          color: '#ffffff',
+                            : 'linear-gradient(to right, #c17f59, #daa06d)',
+                          color: '#ffecd2',
                         }}
                       >
                         {t('startNewBtn')}
@@ -1093,8 +1171,8 @@ export default function FortuneTellerPage() {
                 onClick={() => setStep(1)}
                 className="mt-4 w-full py-3 rounded-lg transition-all duration-300"
                 style={{
-                  border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                  color: isNight ? '#a29bfe' : '#4a5568',
+                  border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                  color: isNight ? '#a29bfe' : '#7b4a6b',
                   background: 'transparent',
                 }}
               >
@@ -1109,25 +1187,25 @@ export default function FortuneTellerPage() {
           <section
             className="backdrop-blur-md rounded-xl p-8 shadow-2xl transition-all duration-500"
             style={{
-              background: isNight ? 'rgba(26, 26, 58, 0.4)' : 'rgba(255, 255, 255, 0.7)',
-              border: isNight ? '1px solid rgba(255, 234, 167, 0.2)' : '1px solid rgba(255, 159, 67, 0.3)',
+              background: isNight ? 'rgba(26, 26, 58, 0.4)' : 'rgba(255, 236, 210, 0.5)',
+              border: isNight ? '1px solid rgba(255, 234, 167, 0.2)' : '1px solid rgba(199, 127, 89, 0.3)',
             }}
           >
             <h2
               className="text-2xl font-semibold mb-4 text-center transition-all duration-500"
-              style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
+              style={{ color: isNight ? '#ffeaa7' : '#4a2c5a' }}
             >
               {t('step3Title')}
             </h2>
             <p
               className="text-center mb-2 transition-all duration-500"
-              style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+              style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
             >
-              {t('step3Subtitle')} <span style={{ color: isNight ? '#fd79a8' : '#d53f8c', fontWeight: 600 }}>{selectedTopic ? topicLabels[selectedTopic] : ''}</span> {t('step3Reading')}
+              {t('step3Subtitle')} <span style={{ color: isNight ? '#fd79a8' : '#c17f59', fontWeight: 600 }}>{selectedTopic ? topicLabels[selectedTopic] : ''}</span> {t('step3Reading')}
             </p>
             <p
               className="text-center mb-8 text-sm transition-all duration-500"
-              style={{ color: isNight ? 'rgba(162, 155, 254, 0.6)' : 'rgba(74, 85, 104, 0.6)' }}
+              style={{ color: isNight ? 'rgba(162, 155, 254, 0.6)' : 'rgba(123, 74, 107, 0.5)' }}
             >
               Your question: "{question}"
             </p>
@@ -1150,19 +1228,19 @@ export default function FortuneTellerPage() {
                 <div
                   className="p-6 rounded-xl backdrop-blur-sm transition-all duration-500"
                   style={{
-                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 248, 231, 0.8)',
-                    border: isNight ? '1px solid rgba(255, 234, 167, 0.3)' : '1px solid rgba(255, 159, 67, 0.3)',
+                    background: isNight ? 'rgba(10, 10, 26, 0.6)' : 'rgba(255, 236, 210, 0.7)',
+                    border: isNight ? '1px solid rgba(255, 234, 167, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
                   }}
                 >
                   <h3
                     className="text-xl font-semibold text-center mb-4 transition-all duration-500"
-                    style={{ color: isNight ? '#ffeaa7' : '#c05621' }}
+                    style={{ color: isNight ? '#ffeaa7' : '#4a2c5a' }}
                   >
                     {t('fortuneTitle')}
                   </h3>
                   <div
                     className="leading-relaxed whitespace-pre-line transition-all duration-500"
-                    style={{ color: isNight ? '#ffffff' : '#2d3748' }}
+                    style={{ color: isNight ? '#ffffff' : '#4a3f35' }}
                   >
                     {fortune}
                   </div>
@@ -1174,8 +1252,8 @@ export default function FortuneTellerPage() {
                     onClick={handleDrawAnother}
                     className="px-6 py-3 rounded-lg transition-all duration-300"
                     style={{
-                      border: isNight ? '1px solid rgba(255, 234, 167, 0.5)' : '1px solid rgba(255, 159, 67, 0.5)',
-                      color: isNight ? '#ffeaa7' : '#c05621',
+                      border: isNight ? '1px solid rgba(255, 234, 167, 0.5)' : '1px solid rgba(199, 127, 89, 0.5)',
+                      color: isNight ? '#ffeaa7' : '#4a2c5a',
                       background: 'transparent',
                     }}
                   >
@@ -1187,8 +1265,8 @@ export default function FortuneTellerPage() {
                     style={{
                       background: isNight
                         ? 'linear-gradient(to right, #ffeaa7, #f8b739)'
-                        : 'linear-gradient(to right, #ff9f43, #ffd93d)',
-                      color: isNight ? '#0a0a1a' : '#ffffff',
+                        : 'linear-gradient(to right, #f4c67a, #c17f59)',
+                      color: isNight ? '#0a0a1a' : '#ffecd2',
                     }}
                   >
                     {t('startNewBtn')}
@@ -1201,11 +1279,11 @@ export default function FortuneTellerPage() {
               <div className="mt-8 text-center">
                 <div
                   className="inline-flex items-center gap-3"
-                  style={{ color: isNight ? '#a29bfe' : '#4a5568' }}
+                  style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
                 >
                   <div
                     className="animate-spin w-6 h-6 border-2 border-t-transparent rounded-full"
-                    style={{ borderColor: isNight ? '#ffeaa7' : '#ff9f43', borderTopColor: 'transparent' }}
+                    style={{ borderColor: isNight ? '#ffeaa7' : '#c17f59', borderTopColor: 'transparent' }}
                   ></div>
                   {t('consulting')}
                 </div>
@@ -1220,8 +1298,8 @@ export default function FortuneTellerPage() {
               onClick={() => setStep(2)}
               className="mt-4 w-full py-3 rounded-lg transition-all duration-300"
               style={{
-                border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(193, 193, 193, 0.5)',
-                color: isNight ? '#a29bfe' : '#4a5568',
+                border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
+                color: isNight ? '#a29bfe' : '#7b4a6b',
                 background: 'transparent',
               }}
             >
@@ -1233,7 +1311,7 @@ export default function FortuneTellerPage() {
         {/* Footer */}
         <footer
           className="text-center mt-12 text-sm transition-all duration-500"
-          style={{ color: isNight ? 'rgba(162, 155, 254, 0.5)' : 'rgba(74, 85, 104, 0.5)' }}
+          style={{ color: isNight ? 'rgba(162, 155, 254, 0.5)' : 'rgba(123, 74, 107, 0.5)' }}
         >
           {t('footer')}
         </footer>
