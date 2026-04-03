@@ -987,6 +987,7 @@ export default function FortuneTellerPage() {
                         onClick={() => {
                           setFortune(null);
                           setQuestion('');
+                          setError(null);
                         }}
                         className="px-6 py-3 rounded-lg transition-all duration-300"
                         style={{
@@ -1137,6 +1138,7 @@ export default function FortuneTellerPage() {
                         onClick={() => {
                           setFortune(null);
                           setQuestion('');
+                          setError(null);
                         }}
                         className="px-6 py-3 rounded-lg transition-all duration-300"
                         style={{
@@ -1295,7 +1297,14 @@ export default function FortuneTellerPage() {
             )}
 
             <button
-              onClick={() => setStep(2)}
+              onClick={() => {
+                setStep(1);
+                setQuestion('');
+                setSelectedTopic(null);
+                setSelectedCard(null);
+                setFortune(null);
+                setError(null);
+              }}
               className="mt-4 w-full py-3 rounded-lg transition-all duration-300"
               style={{
                 border: isNight ? '1px solid rgba(162, 155, 254, 0.3)' : '1px solid rgba(199, 127, 89, 0.4)',
@@ -1303,7 +1312,7 @@ export default function FortuneTellerPage() {
                 background: 'transparent',
               }}
             >
-              {t('backTopicBtn')}
+              {t('backBtn')}
             </button>
           </section>
         )}
