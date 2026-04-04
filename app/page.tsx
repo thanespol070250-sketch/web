@@ -27,12 +27,15 @@ const Stars = dynamic(() => import('./components/Stars'), {
   ssr: false,
 });
 
-const topicLabels: Record<Topic, string> = {
-  love: 'Love & Relationships',
-  studies: 'Career & Studies',
-  personality: 'Personal Growth & Future',
-  health: 'Health & Wellness',
-  finance: 'Finance & Prosperity',
+const getTopicLabel = (topic: Topic, language: string): string => {
+  const labels: Record<Topic, Record<string, string>> = {
+    love: { en: 'Love & Relationships', th: 'ความรัก' },
+    studies: { en: 'Career & Studies', th: 'อาชีพ' },
+    personality: { en: 'Personal Growth & Future', th: 'อนาคต' },
+    health: { en: 'Health & Wellness', th: 'สุขภาพ' },
+    finance: { en: 'Finance & Prosperity', th: 'การเงิน' },
+  };
+  return labels[topic][language] || labels[topic]['en'];
 };
 
 const topicIcons: Record<Topic, string> = {
@@ -82,7 +85,7 @@ export default function FortuneTellerPage() {
   const handleDirectQuestionSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!question.trim()) {
-      setError('Please enter your question');
+      setError(t('errorEnterQuestion'));
       return;
     }
     setIsLoading(true);
@@ -119,7 +122,7 @@ export default function FortuneTellerPage() {
   const handleProphecySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!question.trim()) {
-      setError('Please enter what guidance you seek');
+      setError(t('errorEnterGuidance'));
       return;
     }
     setIsLoading(true);
@@ -164,7 +167,7 @@ export default function FortuneTellerPage() {
       setStep(3);
       setError(null);
     } else {
-      setError(selectedTopic ? 'Please enter your question' : 'Please select a topic');
+      setError(selectedTopic ? t('errorEnterQuestion') : t('errorSelectTopic'));
     }
   };
 
@@ -459,7 +462,7 @@ export default function FortuneTellerPage() {
           <div className="flex justify-between items-center mb-4">
             <ThemeSwitcher />
             <div className="text-sm" style={{ color: isNight ? '#ffeaa7' : '#7b4a6b' }}>
-              Step {step} of 3
+              {t('stepIndicator')} {step} {t('stepOf')} 3
             </div>
           </div>
           <h1
@@ -762,16 +765,16 @@ export default function FortuneTellerPage() {
                       selectedTopic === 'health' ? 'ring-2 ring-green-400 ring-offset-2' : ''
                     }`}
                     style={{
-                      background: isNight ? 'rgba(46, 204, 113, 0.2)' : 'rgba(123, 74, 107, 0.3)',
+                      background: isNight ? 'rgba(46, 204, 113, 0.2)' : 'rgba(72, 160, 120, 0.35)',
                       border: selectedTopic === 'health'
-                        ? `2px solid ${isNight ? '#2ecc71' : '#7b4a6b'}`
-                        : isNight ? '1px solid rgba(46, 204, 113, 0.3)' : '1px solid rgba(74, 44, 90, 0.35)',
+                        ? `2px solid ${isNight ? '#2ecc71' : '#4a9970'}`
+                        : isNight ? '1px solid rgba(46, 204, 113, 0.3)' : '1px solid rgba(72, 160, 120, 0.4)',
                     }}
                   >
                     <div className="text-3xl mb-2">🌿</div>
                     <h3
                       className="text-sm font-semibold transition-all duration-300"
-                      style={{ color: isNight ? '#2ecc71' : '#7b4a6b' }}
+                      style={{ color: isNight ? '#2ecc71' : '#4a9970' }}
                     >
                       {t('healthTitle')}
                     </h3>
@@ -784,16 +787,16 @@ export default function FortuneTellerPage() {
                       selectedTopic === 'finance' ? 'ring-2 ring-amber-400 ring-offset-2' : ''
                     }`}
                     style={{
-                      background: isNight ? 'rgba(255, 215, 0, 0.2)' : 'rgba(244, 198, 122, 0.4)',
+                      background: isNight ? 'rgba(255, 215, 0, 0.2)' : 'rgba(218, 160, 106, 0.4)',
                       border: selectedTopic === 'finance'
-                        ? `2px solid ${isNight ? '#ffd700' : '#f4c67a'}`
-                        : isNight ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid rgba(244, 198, 122, 0.4)',
+                        ? `2px solid ${isNight ? '#ffd700' : '#c17f59'}`
+                        : isNight ? '1px solid rgba(255, 215, 0, 0.3)' : '1px solid rgba(218, 160, 106, 0.4)',
                     }}
                   >
                     <div className="text-3xl mb-2">💰</div>
                     <h3
                       className="text-sm font-semibold transition-all duration-300"
-                      style={{ color: isNight ? '#ffd700' : '#f4c67a' }}
+                      style={{ color: isNight ? '#ffd700' : '#c17f59' }}
                     >
                       {t('financeTitle')}
                     </h3>
@@ -1203,13 +1206,13 @@ export default function FortuneTellerPage() {
               className="text-center mb-2 transition-all duration-500"
               style={{ color: isNight ? '#a29bfe' : '#7b4a6b' }}
             >
-              {t('step3Subtitle')} <span style={{ color: isNight ? '#fd79a8' : '#c17f59', fontWeight: 600 }}>{selectedTopic ? topicLabels[selectedTopic] : ''}</span> {t('step3Reading')}
+              {t('step3Subtitle')} <span style={{ color: isNight ? '#fd79a8' : '#c17f59', fontWeight: 600 }}>{selectedTopic ? getTopicLabel(selectedTopic, language) : ''}</span> {t('step3Reading')}
             </p>
             <p
               className="text-center mb-8 text-sm transition-all duration-500"
               style={{ color: isNight ? 'rgba(162, 155, 254, 0.6)' : 'rgba(123, 74, 107, 0.5)' }}
             >
-              Your question: "{question}"
+              {language === 'th' ? 'คำถามของคุณ:' : 'Your question:'} "{question}"
             </p>
 
             <div className="flex justify-center mb-8">
