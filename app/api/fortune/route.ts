@@ -123,7 +123,7 @@ Based on their birth date and specific question, provide a personalized and insi
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt },
           ],
-          max_tokens: 500,
+          max_tokens: 1500,
           temperature: 0.8,
         }),
       });
@@ -141,7 +141,7 @@ console.log('Headers:', {
 console.log('Body:', JSON.parse(JSON.stringify({
   model: 'z-ai/glm-5',
   messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
-  max_tokens: 500,
+  max_tokens: 1500,
   temperature: 0.8,
 })));
 
@@ -207,7 +207,7 @@ Based on their birth date, cosmic alignment, and their request for life guidance
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt },
           ],
-          max_tokens: 600,
+          max_tokens: 1500,
           temperature: 0.85,
         }),
       });
@@ -278,7 +278,7 @@ Based on their birth date, specific question, and the oracle card they drew, pro
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        max_tokens: 500,
+        max_tokens: 1500,
         temperature: 0.8,
       }),
     });
