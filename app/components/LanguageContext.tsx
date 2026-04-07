@@ -100,9 +100,6 @@ const translations: Record<Language, Record<string, string>> = {
     errorEnterQuestion: 'Please enter your question',
     errorSelectTopic: 'Please select a topic',
     errorEnterGuidance: 'Please enter what guidance you seek',
-
-    // Love description
-    loveDesc: 'Romance & relationships',
   },
   th: {
     // Header
@@ -193,9 +190,6 @@ const translations: Record<Language, Record<string, string>> = {
     errorEnterQuestion: 'กรุณากรอกคำถาม',
     errorSelectTopic: 'กรุณาเลือกหัวข้อ',
     errorEnterGuidance: 'กรุณากรอกคำแนะนำที่ต้องการ',
-
-    // Love description
-    loveDesc: 'ความสัมพันธ์',
   },
 };
 
