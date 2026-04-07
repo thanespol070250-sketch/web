@@ -50,7 +50,7 @@ const translations: Record<Language, Record<string, string>> = {
     oracleAnswerTitle: 'Oracle Answer',
     yourQuestionWas: 'You asked',
     askAnotherBtn: 'Ask Another',
-    backToModeBtn: 'Back',
+    backToModeBtn: 'Back To Mode',
     loveTitle: 'Love',
     loveDesc: 'Romance & relationships',
     studiesTitle: 'Career',
@@ -61,7 +61,7 @@ const translations: Record<Language, Record<string, string>> = {
     questionPlaceholder: 'What do you want to know?',
     questionHint: 'Be specific...',
     submitBtn: 'Get Fortune',
-    backBtn: 'Back',
+    backBtn: 'Back To Home',
 
     // Step 3 - Cards
     step3Title: 'Draw Your Oracle Card',
@@ -140,7 +140,7 @@ const translations: Record<Language, Record<string, string>> = {
     oracleAnswerTitle: 'คำตอบ',
     yourQuestionWas: 'คุณถาม',
     askAnotherBtn: 'ถามอีก',
-    backToModeBtn: 'กลับ',
+    backToModeBtn: 'เลือกโหมดใหม่',
     loveTitle: 'ความรัก',
     loveDesc: 'ความสัมพันธ์',
     studiesTitle: 'อาชีพ',
@@ -151,7 +151,8 @@ const translations: Record<Language, Record<string, string>> = {
     questionPlaceholder: 'อยากรู้อะไร?',
     questionHint: 'ระบุให้ชัดเจน...',
     submitBtn: 'ทำนาย',
-    backBtn: 'กลับ',
+    backBtn: 'กลับไปหน้าแรก',
+    backhome: 'กลับไปหน้าแรก',
 
     // Step 3 - Cards
     step3Title: 'หยิบไพ่โอราเคิล',
