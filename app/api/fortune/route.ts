@@ -166,7 +166,7 @@ console.log('Body:', JSON.parse(JSON.stringify({
       const data = await response.json();
       const fortune = data.choices?.[0]?.message?.content || (language === 'th' ? 'ดวงดาวเงียบวันนี้...' : 'The stars are silent today...');
       console.log('[Fortune API] AI response received successfully');
-      console.log('[Fortune API] Model used: z-ai/glm5');
+      console.log('[Fortune API] Model used: z-ai/glm-5');
       console.log('[Fortune API] Fortune generated:', fortune.substring(0, 100) + '...');
 
       return NextResponse.json({ fortune });
@@ -236,7 +236,7 @@ Based on their birth date, cosmic alignment, and their request for life guidance
       const data = await response.json();
       const fortune = data.choices?.[0]?.message?.content || (language === 'th' ? 'ตำราโบราณาเงียบวันนี้...' : 'The ancient scrolls are silent today...');
       console.log('[Fortune API] AI response received successfully (prophecy mode)');
-      console.log('[Fortune API] Model used: z-ai/glm5');
+      console.log('[Fortune API] Model used: z-ai/glm-5');
       console.log('[Fortune API] Prophecy generated:', fortune.substring(0, 100) + '...');
 
       return NextResponse.json({ fortune });
@@ -302,12 +302,12 @@ Based on their birth date, specific question, and the oracle card they drew, pro
     const data = await response.json();
     const fortune = data.choices?.[0]?.message?.content || (language === 'th' ? 'ดวงดาวเงียบวันนี้...' : 'The stars are silent today...');
     console.log('[Fortune API] AI response received successfully (topic mode)');
-    console.log('[Fortune API] Model used: z-ai/glm5');
+    console.log('[Fortune API] Model used: z-ai/glm-5');
     console.log('[Fortune API] Fortune generated:', fortune.substring(0, 100) + '...');
     return NextResponse.json({ fortune });
   } catch (error) {
     console.error('Fortune API error:', error);
     // Use fallback fortune on error
-    return NextResponse.json({ fortune: getFallbackFortune('personality', language) });
+    return NextResponse.json({ fortune: getFallbackFortune('personality', 'en') });
   }
 }
