@@ -103,22 +103,12 @@ export async function POST(request: NextRequest) {
 
 Based on their birth date and specific question, provide a personalized and insightful response. Include mystical elements, practical guidance, and address their question directly.`;
 
-      console.log(userPrompt);
       // Check if API key is configured
       if (!process.env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY === 'your_api_key_here') {
-<<<<<<< HEAD
         console.log('[Fortune API] WARNING: No API key configured - using fallback fortune (NOT AI-generated)');
         return NextResponse.json({ fortune: getFallbackFortune('personality', language) });
-=======
-        console.log("AAAAAA");
-        const randomFortune = fallbackFortunes.personality[Math.floor(Math.random() * fallbackFortunes.personality.length)];
-        return NextResponse.json({ fortune: randomFortune });
->>>>>>> a14dd62 (CHANGE API KEY)
       }
 
-
-
-      console.log("BBBBBBBB Bearer " + process.env.OPENROUTER_API_KEY);
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
