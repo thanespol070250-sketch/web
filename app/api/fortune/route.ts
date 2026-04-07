@@ -72,7 +72,12 @@ const prophecyFallbackTh = [
 
 export async function POST(request: NextRequest) {
   try {
+
+    console.log("HELOOOO DOG");
+    
     const body = await request.json();
+
+    console.log(JSON.stringify(body));
     const { name, dateOfBirth, question, topic, card, mode, language } = body;
 
     console.log('[Fortune API] Request received:', { name, question, mode, topic, language });
@@ -98,12 +103,22 @@ export async function POST(request: NextRequest) {
 
 Based on their birth date and specific question, provide a personalized and insightful response. Include mystical elements, practical guidance, and address their question directly.`;
 
+      console.log(userPrompt);
       // Check if API key is configured
       if (!process.env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY === 'your_api_key_here') {
+<<<<<<< HEAD
         console.log('[Fortune API] WARNING: No API key configured - using fallback fortune (NOT AI-generated)');
         return NextResponse.json({ fortune: getFallbackFortune('personality', language) });
+=======
+        console.log("AAAAAA");
+        const randomFortune = fallbackFortunes.personality[Math.floor(Math.random() * fallbackFortunes.personality.length)];
+        return NextResponse.json({ fortune: randomFortune });
+>>>>>>> a14dd62 (CHANGE API KEY)
       }
 
+
+
+      console.log("BBBBBBBB Bearer " + process.env.OPENROUTER_API_KEY);
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -113,7 +128,7 @@ Based on their birth date and specific question, provide a personalized and insi
           'X-Title': 'Fortune Oracle',
         },
         body: JSON.stringify({
-          model: 'z-ai/glm5',
+          model: 'z-ai/glm-5',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt },
@@ -122,6 +137,26 @@ Based on their birth date and specific question, provide a personalized and insi
           temperature: 0.8,
         }),
       });
+
+
+      console.log('--- Debugging Fetch Request ---');
+console.log('URL:', 'https://openrouter.ai/api/v1/chat/completions');
+console.log('Headers:', {
+  'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY ? 'EXISTS' : 'MISSING'}`,
+  'Full_Auth_Value': `Bearer ${process.env.OPENROUTER_API_KEY}`, // CAUTION: Logs your actual key
+  'Content-Type': 'application/json',
+  'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  'X-Title': 'Fortune Oracle',
+});
+console.log('Body:', JSON.parse(JSON.stringify({
+  model: 'z-ai/glm-5',
+  messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }],
+  max_tokens: 500,
+  temperature: 0.8,
+})));
+
+
+      console.log(response)
 
       if (!response.ok) {
         console.log('[Fortune API] ERROR: AI API request failed with status:', response.status);
@@ -177,7 +212,7 @@ Based on their birth date, cosmic alignment, and their request for life guidance
           'X-Title': 'Fortune Oracle',
         },
         body: JSON.stringify({
-          model: 'z-ai/glm5',
+          model: 'z-ai/glm-5',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt },
@@ -248,7 +283,7 @@ Based on their birth date, specific question, and the oracle card they drew, pro
         'X-Title': 'Fortune Oracle',
       },
       body: JSON.stringify({
-        model: 'z-ai/glm5', // Using GLM-5 model as requested
+        model: 'z-ai/glm-5', // Using GLM-5 model as requested
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
